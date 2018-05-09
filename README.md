@@ -1,4 +1,4 @@
-# nuxt-temp
+# nuxt-demo
 
 > Nuxt.js+iview 
 
