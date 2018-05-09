@@ -1,7 +1,6 @@
 # nuxt-demo
 
-> Nuxt.js+iview 
-最近公司CRM项目想采用 nuxt+ivew+koa2的组合模式开发，目前正在踩坑中，demo还不完整，后面会继续更新
+> 最近公司CRM项目想采用 nuxt+ivew+koa2的组合模式开发，目前正在踩坑中，demo还不完整，后面会继续更新
 
 ## Build Setup
 
