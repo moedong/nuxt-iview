@@ -19,7 +19,7 @@ module.exports = {
   ],
   plugins: [
     { src: '~plugins/flexible.js', ssr: false },
-    { src: '~plugins/iview.js', ssr: false }
+    { src: '~plugins/iview.js', ssr:false }
   ],
   loading: './components/loading.vue',
   cache: true,

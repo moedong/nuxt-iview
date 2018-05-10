@@ -61,7 +61,9 @@ util.getRouterObjByName = function (routers, name) {
 
 util.handleTitle = function (vm, item) {
     if (typeof item.title === 'object') {
-        return vm.$t(item.title.i18n);
+        
+        //return vm.$t(item.title.i18n);
+        return item.title.i18n;
     } else {
         return item.title;
     }
@@ -70,7 +72,9 @@ util.handleTitle = function (vm, item) {
 util.setCurrentPath = function (vm, name) {
     let title = '';
     let isOtherRouter = false;
+
     vm.$store.state.app.routers.forEach(item => {
+
         if (item.children.length === 1) {
             if (item.children[0].name === name) {
                 title = util.handleTitle(vm, item);
@@ -90,6 +94,7 @@ util.setCurrentPath = function (vm, name) {
         }
     });
     let currentPathArr = [];
+
     if (name === 'home_index') {
         currentPathArr = [
             {
@@ -112,14 +117,24 @@ util.setCurrentPath = function (vm, name) {
             }
         ];
     } else {
+
         let currentPathObj = vm.$store.state.app.routers.filter(item => {
+
+            
+
             if (item.children.length <= 1) {
+                //console.log("222----------",item.children[0].name,name)
+
                 return item.children[0].name === name;
             } else {
                 let i = 0;
                 let childArr = item.children;
                 let len = childArr.length;
+
                 while (i < len) {
+
+                    //console.log("333----------",childArr[i].name,name)
+
                     if (childArr[i].name === name) {
                         return true;
                     }
@@ -128,6 +143,10 @@ util.setCurrentPath = function (vm, name) {
                 return false;
             }
         })[0];
+
+        
+
+
         if (currentPathObj.children.length <= 1 && currentPathObj.name === 'home') {
             currentPathArr = [
                 {
@@ -182,8 +201,17 @@ util.openNewPage = function (vm, name, argu, query) {
     let openedPageLen = pageOpenedList.length;
     let i = 0;
     let tagHasOpened = false;
+
+    console.log('openNewPage2222222222',pageOpenedList.toString())
+
     while (i < openedPageLen) {
+
+        console.log('openNewPage33333333',name,pageOpenedList[i].name)
+
         if (name === pageOpenedList[i].name) { // 页面已经打开
+
+            console.log('openNewPage444444')
+
             vm.$store.commit('pageOpenedList', {
                 index: i,
                 argu: argu,
@@ -196,6 +224,7 @@ util.openNewPage = function (vm, name, argu, query) {
     }
     if (!tagHasOpened) {
         let tag = vm.$store.state.app.tagsList.filter((item) => {
+            //console.log('openNewPage555555',name,item.name)
             if (item.children) {
                 return name === item.children[0].name;
             } else {
@@ -203,6 +232,9 @@ util.openNewPage = function (vm, name, argu, query) {
             }
         });
         tag = tag[0];
+
+        
+
         if (tag) {
             tag = tag.children ? tag.children[0] : tag;
             if (argu) {
@@ -211,6 +243,9 @@ util.openNewPage = function (vm, name, argu, query) {
             if (query) {
                 tag.query = query;
             }
+            
+            console.log('openNewPage666666',tag)
+            
             vm.$store.commit('increateTag', tag);
         }
     }

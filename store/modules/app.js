@@ -96,6 +96,7 @@ const app = {
         addOpenSubmenu (state, name) {
             let hasThisName = false;
             let isEmpty = false;
+            //console.log(state.openedSubmenuArr.toString(),name);
             if (name.length === 0) {
                 isEmpty = true;
             }
@@ -114,9 +115,9 @@ const app = {
             });
         },
         initCachepage (state) {
-            //if (localStorage.cachePage) {
-             //   state.cachePage = JSON.parse(localStorage.cachePage);
-            //}
+            if (localStorage.cachePage) {
+                state.cachePage = JSON.parse(localStorage.cachePage);
+            }
         },
         removeTag (state, name) {
             state.pageOpenedList.map((item, index) => {
@@ -134,12 +135,12 @@ const app = {
                 openedPage.query = get.query;
             }
             state.pageOpenedList.splice(get.index, 1, openedPage);
-            //localStorage.pageOpenedList = JSON.stringify(state.pageOpenedList);
+            localStorage.pageOpenedList = JSON.stringify(state.pageOpenedList);
         },
         clearAllTags (state) {
             state.pageOpenedList.splice(1);
             state.cachePage.length = 0;
-            //localStorage.pageOpenedList = JSON.stringify(state.pageOpenedList);
+            localStorage.pageOpenedList = JSON.stringify(state.pageOpenedList);
         },
         clearOtherTags (state, vm) {
             let currentName = vm.$route.name;
@@ -159,7 +160,7 @@ const app = {
                 return item === currentName;
             });
             state.cachePage = newCachepage;
-            //localStorage.pageOpenedList = JSON.stringify(state.pageOpenedList);
+            localStorage.pageOpenedList = JSON.stringify(state.pageOpenedList);
         },
         setOpenedList (state) {
             state.pageOpenedList = [otherRouter.children[0]];
@@ -171,7 +172,7 @@ const app = {
             state.currentPageName = name;
         },
         setAvator (state, path) {
-            //localStorage.avatorImgPath = path;
+            localStorage.avatorImgPath = path;
         },
         switchLang (state, lang) {
             state.lang = lang;
@@ -184,12 +185,20 @@ const app = {
             state.messageCount = count;
         },
         increateTag (state, tagObj) {
+
+            //console.log('tag888888888888888');
+
             if (!Util.oneOf(tagObj.name, state.dontCache)) {
                 state.cachePage.push(tagObj.name);
-                //localStorage.cachePage = JSON.stringify(state.cachePage);
+                localStorage.cachePage = JSON.stringify(state.cachePage);
             }
+
             state.pageOpenedList.push(tagObj);
-            //localStorage.pageOpenedList = JSON.stringify(state.pageOpenedList);
+
+            console.log('tag99999999999999999',state.pageOpenedList.length);
+
+            localStorage.pageOpenedList = JSON.stringify(state.pageOpenedList);
+
         }
     }
 };

@@ -1,6 +1,6 @@
 <style lang="less">
     @import "./home.less";
-    @import "../../styles/common.less";
+    @import "../../assets/css/common.less";
 </style>
 <template>
     <div class="home-main">
@@ -232,7 +232,7 @@ export default {
     },
     computed: {
         avatorPath () {
-            return localStorage.avatorImgPath;
+            return '';
         }
     },
     methods: {

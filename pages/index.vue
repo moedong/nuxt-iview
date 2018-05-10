@@ -5,20 +5,22 @@
 <template>
   <div class="main">
 
-    <div class="sidebar-menu-con">
+    <div class="sidebar-menu-con" :style="{width: shrink?'60px':'200px', overflow: shrink ? 'visible' : 'auto'}">
         <no-ssr>
-        <shrinkable-menu 
-            :shrink="shrink"
-            @on-change="handleSubmenuChange"
-            :theme="menuTheme" 
-            :before-push="beforePush"
-            :open-names="openedSubmenuArr"
-            :menu-list="menuList">
-            <div slot="top" class="logo-con">
-                <img v-show="!shrink"  src="../assets/images/logo.jpg" key="max-logo" />
-                <img v-show="shrink" src="../assets/images/logo-min.jpg" key="min-logo" />
-            </div>
-        </shrinkable-menu>
+        <scroll-bar ref="scrollBar">
+            <shrinkable-menu 
+                :shrink="shrink"
+                @on-change="handleSubmenuChange"
+                :theme="menuTheme" 
+                :before-push="beforePush"
+                :open-names="openedSubmenuArr"
+                :menu-list="menuList">
+                <div slot="top" class="logo-con">
+                    <img v-show="!shrink"  src="../assets/images/logo.jpg" key="max-logo" />
+                    <img v-show="shrink" src="../assets/images/logo-min.jpg" key="min-logo" />
+                </div>
+            </shrinkable-menu>
+        </scroll-bar>
         </no-ssr>
     </div>
 
@@ -82,21 +84,21 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex'
-  import a from '../components/loading.vue'
-  import shrinkableMenu from '../components/main-components/shrinkable-menu/shrinkable-menu.vue';
+    import { mapState } from 'vuex'
+    import shrinkableMenu from '../components/main-components/shrinkable-menu/shrinkable-menu.vue';
+    import tagsPageOpened from '../components/main-components/tags-page-opened.vue';
 
-  import tagsPageOpened from '../components/main-components/tags-page-opened.vue';
-  import breadcrumbNav from '../components/main-components/breadcrumb-nav.vue';
+    import breadcrumbNav from '../components/main-components/breadcrumb-nav.vue';
+    import lockScreen from '../components/main-components/lockscreen/lockscreen.vue';
 
-  import lockScreen from '../components/main-components/lockscreen/lockscreen.vue';
-  import messageTip from '../components/main-components/message-tip.vue';
+    import messageTip from '../components/main-components/message-tip.vue';
+    import Cookies from 'js-cookie';
+    import util from '@/libs/util.js';
+    import scrollBar from '../components/my-components/scroll-bar/vue-scroller-bars';
 
-  import scrollBar from '../components/my-components/scroll-bar/vue-scroller-bars';
-  import Cookies from 'js-cookie';
-  import util from '@/libs/util.js';
+    import {appRouter} from '../router/router';
   
-  export default {
+export default {
     components: {
         shrinkableMenu,
         tagsPageOpened,
@@ -119,8 +121,17 @@
             };
         },
     methods: {
-        init(){
+        init () {
+            let pathArr = util.setCurrentPath(this, this.$route.name);
             this.$store.commit('updateMenulist');
+            if (pathArr.length >= 2) {
+                this.$store.commit('addOpenSubmenu', pathArr[1].name);
+            }
+            this.userName = Cookies.get('user');
+            let messageCount = 3;
+            this.messageCount = messageCount.toString();
+            this.checkTag(this.$route.name);
+            this.$store.commit('setMessageCount', 3);
         },
         link () {
             this.$router.push({ name: 'other' })
@@ -145,11 +156,14 @@
         },
         checkTag (name) {
             let openpageHasTag = this.pageTagsList.some(item => {
+
+                console.log('openNewPage0000000000',item.name,name);
                 if (item.name === name) {
                     return true;
                 }
             });
             if (!openpageHasTag) { //  解决关闭当前标签后再点击回退按钮会退到当前页时没有标签的问题
+                console.log('openNewPage11111111111111111');
                 util.openNewPage(this, name, this.$route.params || {}, this.$route.query || {});
             }
         },
@@ -163,6 +177,9 @@
             //     return true;
             // }
             return true;
+        },
+        scrollBarResize () {
+            this.$refs.scrollBar.resize();
         }
     },
     computed: {
@@ -192,6 +209,15 @@
         }
     },
     watch: {
+        '$route' (to) {
+            this.$store.commit('setCurrentPageName', to.name);
+            let pathArr = util.setCurrentPath(this, to.name);
+            if (pathArr.length > 2) {
+                this.$store.commit('addOpenSubmenu', pathArr[1].name);
+            }
+            this.checkTag(to.name);
+            localStorage.currentPageName = to.name;
+        },
         openedSubmenuArr () {
             setTimeout(() => {
                 this.scrollBarResize();
@@ -201,10 +227,29 @@
     mounted () {
         this.init();
         window.addEventListener('resize', this.scrollBarResize);
-    },
-    created () {
+
+        this.currentPageName = this.$route.name;
         // 显示打开的页面的列表
         this.$store.commit('setOpenedList');
+        this.$store.commit('initCachepage');
+        // 权限菜单过滤相关
+        this.$store.commit('updateMenulist');
+    },
+    created () {
+
+        let tagsList = [];
+        appRouter.map((item) => {
+            if (item.children.length <= 1) {
+                tagsList.push(item.children[0]);
+            } else {
+                tagsList.push(...item.children);
+            }
+        });
+        this.$store.commit('setTagsList', tagsList);
+
+    },
+    dispatch () {
+        window.removeEventListener('resize', this.scrollBarResize);
     }
     
   }
