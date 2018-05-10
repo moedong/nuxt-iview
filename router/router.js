@@ -22,7 +22,7 @@ export const otherRouter = {
 // 作为Main组件的子页面展示并且在左侧菜单显示的路由写在appRouter里
 export const appRouter = [
     {
-        path: '/usermanager',
+        path: '/home',
         icon: 'android-checkbox',
         name: 'usermanager',
         title: '用户管理',
@@ -45,7 +45,7 @@ export const appRouter = [
         ]
     },
     {
-        path: '/article',
+        path: '/home',
         icon: 'social-buffer',
         name: 'article',
         title: '其他',

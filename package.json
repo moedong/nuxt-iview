@@ -5,7 +5,7 @@
   "author": "moedong",
   "private": true,
   "scripts": {
-    "dev": "nuxt",
+    "dev": "backpack dev",
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",
@@ -23,12 +23,15 @@
     "html2canvas": "^0.5.0-beta4",
     "iview": "^2.7.3",
     "js-cookie": "^2.2.0",
-    "nuxt": "^1.0.0-rc11",
     "rasterizehtml": "^1.2.4",
     "simplemde": "^1.11.2",
     "sortablejs": "^1.7.0",
     "tinymce": "^4.7.4",
-    "vuex-persist": "^1.2.2"
+    "vuex-persist": "^1.2.2",
+    "cross-env": "^5.0.1",
+    "koa": "^2.4.1",
+    "nuxt": "latest",
+    "source-map-support": "^0.4.15"
   },
   "devDependencies": {
     "autoprefixer-loader": "^3.2.0",
@@ -52,6 +55,9 @@
     "eslint-plugin-standard": "^3.0.1",
     "less": "^2.7.3",
     "less-loader": "^4.0.5",
-    "vue-i18n": "^7.6.0"
+    "vue-i18n": "^7.6.0",
+    "backpack-core": "^0.3.0",
+    "nodemon": "^1.11.0",
+    "scmp": "^2.0.0"
   }
 }
