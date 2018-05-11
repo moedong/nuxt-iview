@@ -20,3 +20,10 @@ $ npm run generate
 ```
 
 For detailed explanation on how things work, checkout the [Nuxt.js docs](https://github.com/nuxt/nuxt.js).
+
+
+相关页面效果
+
+![截图1](./screenshot/sc1.png)
+
+![截图1](./screenshot/sc2.png)
