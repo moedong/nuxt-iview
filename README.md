@@ -11,12 +11,6 @@ $ npm install # Or yarn install
 # serve with hot reload at localhost:3000
 $ npm run dev
 
-# build for production and launch server
-$ npm run build
-$ npm start
-
-# generate static project
-$ npm run generate
 ```
 
 For detailed explanation on how things work, checkout the [Nuxt.js docs](https://github.com/nuxt/nuxt.js).
@@ -27,3 +21,5 @@ For detailed explanation on how things work, checkout the [Nuxt.js docs](https:/
 ![截图1](./screenshot/sc1.png)
 
 ![截图1](./screenshot/sc2.png)
+
+![截图1](./screenshot/sc3.png)

@@ -11,6 +11,12 @@ import dragabletable from '~/components/tables/dragable-table.vue'
 import editabletable from '~/components/tables/editable-table.vue'
 import errorpage from '~/components/error-page/error-page.vue'
 
+import arealinkage from  '~/components/my-components/area-linkage/area-linkage.vue'
+import fileupload from  '~/components/my-components/file-upload/file-upload.vue'
+import scrollbarpage from  '~/components/my-components/scroll-bar/scroll-bar-page.vue'
+import countto from  '~/components/my-components/count-to/count-to.vue'
+import splitpanepage from  '~/components/my-components/split-pane/split-pane-page.vue'
+
 // 作为Main组件的子页面展示但是不在左侧菜单显示的路由写在otherRouter里
 export const otherRouter = {
     path: '/',
@@ -45,6 +51,41 @@ export const appRouter = [
                 name: 'draggable-list',
                 title: '可拖拽列表',
                 component:draggablelist
+            },
+            {
+                path: 'area-linkage',
+                icon: 'ios-more',
+                name: 'area-linkage',
+                title: '城市级联',
+                component: arealinkage
+            },
+            {
+                path: 'file-upload',
+                icon: 'android-upload',
+                name: 'file-upload',
+                title: '文件上传',
+                component:fileupload
+            },
+            {
+                path: 'scroll-bar',
+                icon: 'android-upload',
+                name: 'scroll-bar',
+                title: '滚动条',
+                component:scrollbarpage
+            },
+            {
+                path: 'count-to',
+                icon: 'arrow-graph-up-right',
+                name: 'count-to',
+                title: '数字渐变',
+                component:countto
+            },
+            {
+                path: 'split-pane-page',
+                icon: 'ios-pause',
+                name: 'split-pane-page',
+                title: 'split-pane',
+                component:splitpanepage
             }
         ]
     },
