@@ -5,7 +5,11 @@ import message from '~/components/message/message.vue'
 import imageeditor from '~/components/my-components/image-editor/image-editor.vue'
 import draggablelist from '~/components/my-components/draggable-list/draggable-list.vue'
 import home from '~/components/home/home.vue'
-
+//import articlepublish from '~/components/form/article-publish/article-publish.vue'
+import workflow from '~/components/form/work-flow/work-flow.vue'
+import dragabletable from '~/components/tables/dragable-table.vue'
+import editabletable from '~/components/tables/editable-table.vue'
+import errorpage from '~/components/error-page/error-page.vue'
 
 // 作为Main组件的子页面展示但是不在左侧菜单显示的路由写在otherRouter里
 export const otherRouter = {
@@ -22,10 +26,10 @@ export const otherRouter = {
 // 作为Main组件的子页面展示并且在左侧菜单显示的路由写在appRouter里
 export const appRouter = [
     {
-        path: '/home',
+        path: '/',
         icon: 'android-checkbox',
         name: 'usermanager',
-        title: '用户管理',
+        title: '组件',
         component: index,
         children: [
             {
@@ -45,14 +49,36 @@ export const appRouter = [
         ]
     },
     {
-        path: '/home',
-        icon: 'social-buffer',
-        name: 'article',
-        title: '其他',
+        path: '/',
+        icon: 'android-checkbox',
+        name: 'form',
+        title: '表单编辑',
         component: index,
         children: [
-            { path: 'other', title: '文章发布', name: 'other', icon: 'compose', component: other },
-            { path: 'other2', title: '文章发布', name: 'other2', icon: 'compose', component: other }
+            //{ path: 'artical-publish', title: '文章发布', name: 'artical-publish', icon: 'compose', component:articlepublish},
+            { path: 'workflow', title: '工作流', name: 'workflow', icon: 'arrow-swap', component:workflow}
+
+        ]
+    },
+    {
+        path: '/',
+        icon: 'ios-grid-view',
+        name: 'tables',
+        title: '表格',
+        component: index,
+        children: [
+            { path: 'dragableTable', title: '可拖拽排序', name: 'dragable-table', icon: 'arrow-move', component:dragabletable},
+            { path: 'editableTable', title: '可编辑表格', name: 'editable-table', icon: 'edit', component:editabletable},
+        ]
+    },
+    {
+        path: '/',
+        icon: 'android-sad',
+        title: '错误页面',
+        name: 'errorpage',
+        component: index,
+        children: [
+            { path: 'index', title: '错误页面', name: 'errorpage_index', component:errorpage}
         ]
     }
 ]

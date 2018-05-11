@@ -157,13 +157,13 @@ export default {
         checkTag (name) {
             let openpageHasTag = this.pageTagsList.some(item => {
 
-                console.log('openNewPage0000000000',item.name,name);
+                //console.log('openNewPage0000000000',item.name,name);
                 if (item.name === name) {
                     return true;
                 }
             });
             if (!openpageHasTag) { //  解决关闭当前标签后再点击回退按钮会退到当前页时没有标签的问题
-                console.log('openNewPage11111111111111111');
+                //console.log('openNewPage11111111111111111');
                 util.openNewPage(this, name, this.$route.params || {}, this.$route.query || {});
             }
         },
