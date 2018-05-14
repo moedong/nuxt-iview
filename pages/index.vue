@@ -75,7 +75,9 @@
     </div>
     <div class="single-page-con" :style="{left: shrink?'60px':'200px'}">
         <div class="single-page">
+            <no-ssr>
             <nuxt-child :include="cachePage" />
+            </no-ssr>
         </div>
     </div>
 
