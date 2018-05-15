@@ -14,6 +14,7 @@
                 :theme="menuTheme" 
                 :before-push="beforePush"
                 :open-names="openedSubmenuArr"
+                :accordion="accordion"
                 :menu-list="menuList">
                 <div slot="top" class="logo-con">
                     <img v-show="!shrink"  src="../assets/images/logo.jpg" key="max-logo" />
@@ -119,7 +120,7 @@ export default {
             return {
                 shrink:false,
                 userName: '',
-                openedSubmenuArr: this.$store.state.app.openedSubmenuArr
+                openedSubmenuArr: this.$store.state.app.openedSubmenuArr,
             };
         },
     methods: {
@@ -208,6 +209,9 @@ export default {
         },
         mesCount () {
             return this.$store.state.app.messageCount;
+        },
+        accordion(){
+            return this.$store.state.app.accordion;
         }
     },
     watch: {
@@ -236,6 +240,7 @@ export default {
         this.$store.commit('initCachepage');
         // 权限菜单过滤相关
         this.$store.commit('updateMenulist');
+        this.$store.commit('setAccordion',true);
     },
     created () {
 

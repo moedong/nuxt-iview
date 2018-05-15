@@ -31,9 +31,13 @@ const app = {
         ],
         tagsList: [...otherRouter.children],
         messageCount: 0,
+        accordion: true,
         dontCache: ['text-editor', 'artical-publish'] // 在这里定义你不想要缓存的页面的name属性值(参见路由配置router.js)
     },
     mutations: {
+        setAccordion (state, boolean) {
+            state.accordion=boolean;
+        },
         setTagsList (state, list) {
             state.tagsList.push(...list);
         },
@@ -96,7 +100,8 @@ const app = {
         addOpenSubmenu (state, name) {
             let hasThisName = false;
             let isEmpty = false;
-            //console.log(state.openedSubmenuArr.toString(),name);
+
+            //console.log('要展开的菜单数组.....'+state.openedSubmenuArr.toString());
             if (name.length === 0) {
                 isEmpty = true;
             }
