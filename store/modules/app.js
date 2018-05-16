@@ -200,7 +200,7 @@ const app = {
 
             state.pageOpenedList.push(tagObj);
 
-            console.log('tag99999999999999999',state.pageOpenedList.length);
+            //console.log('tag99999999999999999',state.pageOpenedList.length);
 
             localStorage.pageOpenedList = JSON.stringify(state.pageOpenedList);
 

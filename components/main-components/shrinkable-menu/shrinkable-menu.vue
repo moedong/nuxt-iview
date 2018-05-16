@@ -10,7 +10,6 @@
             :menu-theme="theme" 
             :menu-list="menuList" 
             :open-names="openNames"
-            :accordion="accordion"
             @on-change="handleChange"
         ></sidebar-menu>
         <sidebar-menu-shrink 
@@ -54,10 +53,6 @@ export default {
         },
         openNames: {
             type: Array
-        },
-        accordion: {
-            type: Boolean,
-            default: false
         }
     },
     computed: {
@@ -77,7 +72,7 @@ export default {
                 }
             }
             if (willpush) {
-                console.log(name)
+                //console.log(name)
                 this.$router.push({
                     name: name
                 });

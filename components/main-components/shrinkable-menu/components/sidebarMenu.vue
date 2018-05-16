@@ -38,6 +38,10 @@ export default {
         },
         openNames: {
             type: Array
+        },
+        accordion: {
+            type: Boolean,
+            default: true
         }
     },
     methods: {

@@ -223,6 +223,7 @@ export default {
             }
             this.checkTag(to.name);
             localStorage.currentPageName = to.name;
+            //this.$store.commit('setAccordion',true);
         },
         openedSubmenuArr () {
             setTimeout(() => {
@@ -240,7 +241,6 @@ export default {
         this.$store.commit('initCachepage');
         // 权限菜单过滤相关
         this.$store.commit('updateMenulist');
-        this.$store.commit('setAccordion',true);
     },
     created () {
 
@@ -253,6 +253,7 @@ export default {
             }
         });
         this.$store.commit('setTagsList', tagsList);
+        
 
     },
     dispatch () {

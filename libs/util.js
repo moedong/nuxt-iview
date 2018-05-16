@@ -202,15 +202,15 @@ util.openNewPage = function (vm, name, argu, query) {
     let i = 0;
     let tagHasOpened = false;
 
-    console.log('openNewPage2222222222',pageOpenedList.toString())
+    //console.log('openNewPage2222222222',pageOpenedList.toString())
 
     while (i < openedPageLen) {
 
-        console.log('openNewPage33333333',name,pageOpenedList[i].name)
+        //console.log('openNewPage33333333',name,pageOpenedList[i].name)
 
         if (name === pageOpenedList[i].name) { // 页面已经打开
 
-            console.log('openNewPage444444')
+            //console.log('openNewPage444444')
 
             vm.$store.commit('pageOpenedList', {
                 index: i,
@@ -244,7 +244,7 @@ util.openNewPage = function (vm, name, argu, query) {
                 tag.query = query;
             }
             
-            console.log('openNewPage666666',tag)
+            //console.log('openNewPage666666',tag)
             
             vm.$store.commit('increateTag', tag);
         }
