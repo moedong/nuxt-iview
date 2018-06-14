@@ -13,8 +13,11 @@ $ npm run dev
 
 ```
 
-For detailed explanation on how things work, checkout the [Nuxt.js docs](https://github.com/nuxt/nuxt.js).
 
+参考资料
+[Nuxt.js docs](https://github.com/nuxt/nuxt.js)
+[iview docs](https://www.iviewui.com/docs/guide/install)
+[iview-admin](https://github.com/iview/iview-admin)
 
 相关页面效果
 
