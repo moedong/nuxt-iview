@@ -12,26 +12,33 @@ module.exports = {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
-  
   css: [
-    { src: '~assets/css/main.less', lang: 'less' },
-    { src: 'iview/dist/styles/iview.css'}
+    { src: '~assets/css/main.css' },
+    { src: 'iview/dist/styles/iview.css' }
   ],
   plugins: [
     { src: '~plugins/flexible.js', ssr: false },
-    { src: '~plugins/iview.js', ssr:false }
+    { src: '~plugins/iview.js', ssr: true }
   ],
   loading: './components/loading.vue',
-  cache: true,
+  cache: {
+    max: 1000,
+    maxAge: 900000
+  },
+  router: {
+    middleware: 'route' // 在每页渲染前运行 middleware/route.js 中间件的逻辑
+  },
   build: {
-    vendor: ['axios']
-  },
-  generate: {
-    routes: [
-      '/'
-    ]
-  },
-  modules: [
-    '@nuxtjs/router'
- ]
+    vendor: ['axios', 'iview', './plugins/iview.js'],
+    extend(config, ctx) {
+      if (ctx.isClient) {
+        // config.module.rules.push({
+        //   enforce: 'pre',
+        //   test: /\.(js|vue)$/,
+        //   loader: 'eslint-loader',
+        //   exclude: /(node_modules)/
+        // })
+      }
+    }
+  }
 }

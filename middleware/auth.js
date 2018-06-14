@@ -1,5 +1,6 @@
-export default function ({ store, redirect }) {
-  if (!store.state.user) {
-    return redirect('/404')
+export default function ({ store, error, redirect }) {
+  // console.log('store', store.getters.getToken)
+  if (!store.getters.token) {
+    redirect('/login')
   }
 }

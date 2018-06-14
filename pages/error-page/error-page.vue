@@ -1,6 +1,27 @@
 <style lang="less">
 @import '../../assets/css/common.less';
-@import './error-page.less';
+.error-page {
+  &-show {
+    width: 100%;
+    height: 180px;
+    transform: scale(0.4);
+  }
+  &-cover {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+  }
+  &-intro-con {
+    height: 180px;
+    p {
+      display: block;
+      width: 100%;
+      text-align: center;
+    }
+  }
+}
 </style>
 
 <template>
@@ -84,9 +105,9 @@
 </template>
 
 <script>
-import Error404 from './404.vue'
-import Error500 from './500.vue'
-import Error403 from './403.vue'
+import Error404 from '~/components/error-page/404.vue'
+import Error500 from '~/components/error-page/500.vue'
+import Error403 from '~/components/error-page/403.vue'
 export default {
   components: {
     Error404,

@@ -1,125 +1,70 @@
 // router.js
-import index from '~/pages/index'
-import other from '~/components/other'
-import message from '~/components/message/message.vue'
-import imageeditor from '~/components/my-components/image-editor/image-editor.vue'
-import draggablelist from '~/components/my-components/draggable-list/draggable-list.vue'
-import home from '~/components/home/home.vue'
-//import articlepublish from '~/components/form/article-publish/article-publish.vue'
-import workflow from '~/components/form/work-flow/work-flow.vue'
-import dragabletable from '~/components/tables/dragable-table.vue'
-import editabletable from '~/components/tables/editable-table.vue'
-import errorpage from '~/components/error-page/error-page.vue'
-
-import arealinkage from  '~/components/my-components/area-linkage/area-linkage.vue'
-import fileupload from  '~/components/my-components/file-upload/file-upload.vue'
-import scrollbarpage from  '~/components/my-components/scroll-bar/scroll-bar-page.vue'
-import countto from  '~/components/my-components/count-to/count-to.vue'
-import splitpanepage from  '~/components/my-components/split-pane/split-pane-page.vue'
-
 // 作为Main组件的子页面展示但是不在左侧菜单显示的路由写在otherRouter里
 export const otherRouter = {
-    path: '/',
-    name: 'home',
-    component: index,
-    redirect: '/home',
-    children: [
-        { path: 'home', title: {i18n: 'home'}, name: 'home_index', component: home },
-        { path: 'message', title: '消息中心', name: 'message_index', component: message }
-    ]
-};
+  path: '/',
+  name: 'otherRouter',
+  redirect: '/home',
+  children: [
+    {
+      path: 'home',
+      title: { i18n: 'home' },
+      name: 'home_index'
+    },
+    {
+      path: 'message',
+      title: '消息中心',
+      name: 'message_index'
+    }
+  ]
+}
 
 // 作为Main组件的子页面展示并且在左侧菜单显示的路由写在appRouter里
 export const appRouter = [
-    {
-        path: '/',
-        icon: 'android-checkbox',
-        name: 'usermanager',
-        title: '组件',
-        component: index,
-        children: [
-            {
-                path: 'image-editor',
-                icon: 'crop',
-                name: 'image-editor',
-                title: '图片预览编辑',
-                component: imageeditor
-            },
-            {
-                path: 'draggable-list',
-                icon: 'arrow-move',
-                name: 'draggable-list',
-                title: '可拖拽列表',
-                component:draggablelist
-            },
-            {
-                path: 'area-linkage',
-                icon: 'ios-more',
-                name: 'area-linkage',
-                title: '城市级联',
-                component: arealinkage
-            },
-            {
-                path: 'file-upload',
-                icon: 'android-upload',
-                name: 'file-upload',
-                title: '文件上传',
-                component:fileupload
-            },
-            {
-                path: 'scroll-bar',
-                icon: 'android-upload',
-                name: 'scroll-bar',
-                title: '滚动条',
-                component:scrollbarpage
-            },
-            {
-                path: 'count-to',
-                icon: 'arrow-graph-up-right',
-                name: 'count-to',
-                title: '数字渐变',
-                component:countto
-            },
-            {
-                path: 'split-pane-page',
-                icon: 'ios-pause',
-                name: 'split-pane-page',
-                title: 'split-pane',
-                component:splitpanepage
-            }
-        ]
-    },
-    {
-        path: '/',
-        icon: 'android-checkbox',
-        name: 'form',
-        title: '表单编辑',
-        component: index,
-        children: [
-            //{ path: 'artical-publish', title: '文章发布', name: 'artical-publish', icon: 'compose', component:articlepublish},
-            { path: 'workflow', title: '工作流', name: 'workflow', icon: 'arrow-swap', component:workflow}
-
-        ]
-    },
-    {
-        path: '/',
-        icon: 'ios-grid-view',
-        name: 'tables',
-        title: '表格',
-        component: index,
-        children: [
-            { path: 'dragableTable', title: '可拖拽排序', name: 'dragable-table', icon: 'arrow-move', component:dragabletable},
-            { path: 'editableTable', title: '可编辑表格', name: 'editable-table', icon: 'edit', component:editabletable},
-        ]
-    },
-    {
-        path: '/',
-        icon: 'android-sad',
+  {
+    path: '/',
+    icon: 'ios-home',
+    name: 'index-base',
+    title: '主页',
+    children: [
+      {
+        path: '/index',
+        title: '主页',
+        name: 'index',
+        icon: 'ios-home'
+      }
+    ]
+  },
+  {
+    path: '/form',
+    icon: 'android-checkbox',
+    name: 'form',
+    title: '表单编辑',
+    children: [
+      {
+        path: '/form/work-flow',
+        title: '工作流',
+        name: 'form-work-flow',
+        icon: 'arrow-swap'
+      },
+      {
+        path: '/form/article-publish',
+        title: '发布文章',
+        name: 'form-article-publish',
+        icon: 'ios-home'
+      }
+    ]
+  },
+  {
+    path: '/error-page',
+    icon: 'android-sad',
+    title: '错误页面',
+    name: 'errorpage',
+    children: [
+      {
+        path: '/error-page/error-page',
         title: '错误页面',
-        name: 'errorpage',
-        component: index,
-        children: [
-            { path: 'index', title: '错误页面', name: 'errorpage_index', component:errorpage}
-        ]
-    }
+        name: 'error-page-error-page'
+      }
+    ]
+  }
 ]

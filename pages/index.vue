@@ -1,266 +1,417 @@
-<style lang="less">
-    @import "./main.less";
-</style>
-
 <template>
   <div class="main">
-
-    <div class="sidebar-menu-con" :style="{width: shrink?'60px':'200px', overflow: shrink ? 'visible' : 'auto'}">
-        <no-ssr>
-        <scroll-bar ref="scrollBar">
-            <shrinkable-menu 
-                :shrink="shrink"
-                @on-change="handleSubmenuChange"
-                :theme="menuTheme" 
-                :before-push="beforePush"
-                :open-names="openedSubmenuArr"
-                :accordion="accordion"
-                :menu-list="menuList">
-                <div slot="top" class="logo-con">
-                    <img v-show="!shrink"  src="../assets/images/logo.jpg" key="max-logo" />
-                    <img v-show="shrink" src="../assets/images/logo-min.jpg" key="min-logo" />
-                </div>
-            </shrinkable-menu>
-        </scroll-bar>
-        </no-ssr>
+    <div class="search">
+      <table>
+        <tbody>
+          <tr>
+            <th>统计范围：</th>
+            <td>
+              <Select v-model="model1" style="width:120px" @on-change="selectType">
+                <Option v-for="item in typeList" :value="item.value" :key="item.value">{{ item.label }}</Option>
+              </Select>
+              <Select v-model="model2" style="width:120px">
+                <Option v-for="item in typeItems" :value="item.value" :key="item.value">{{ item.label }}</Option>
+              </Select>
+            </td>
+          </tr>
+          <tr>
+            <th>时间：</th>
+            <td>
+              <RadioGroup v-model="button1" type="button" @on-change="selectTime">
+                <Radio v-for="item in timeItems" :value="item.value" :key="item.value" :label="item.label"></Radio>
+              </RadioGroup>
+              <Col span="12">
+              <DatePicker type="daterange" :value="date" placement="bottom-end" placeholder="Select date" style="width: 200px"></DatePicker>
+              </Col>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-
-    <div class="main-header-con" :style="{paddingLeft: shrink?'60px':'200px'}">
-        <div class="main-header">
-            <div class="navicon-con">
-                <no-ssr>
-                <Button :style="{transform: 'rotateZ(' + (this.shrink ? '-90' : '0') + 'deg)'}" type="text" @click="toggleClick">
-                    <Icon type="navicon" size="32"></Icon>
-                </Button>
-                </no-ssr>
+    <div class="brief">
+      <h1>销售简报</h1>
+      <div class="ant-row">
+        <div class="ant-col-3">
+          <h2>线索状态</h2>
+          <div class="ant-row">
+            <div class="ant-col-item">
+              <p>已成交</p>
+              <a>5</a>
             </div>
-            <div class="header-middle-con">
-                <div class="main-breadcrumb">
-                    <no-ssr>
-                    <breadcrumb-nav :currentPath="currentPath"></breadcrumb-nav>
-                    </no-ssr>
-                </div>
+            <div class="ant-col-item">
+              <p>有意向</p>
+              <a>1</a>
             </div>
-            <div class="header-avator-con">
-                <no-ssr>
-                <lock-screen></lock-screen>
-                </no-ssr>
-
-                <no-ssr>
-                <message-tip v-model="mesCount"></message-tip>
-                </no-ssr>
-
-                <div class="user-dropdown-menu-con">
-                    <no-ssr>
-                    <Row type="flex" justify="end" align="middle" class="user-dropdown-innercon">
-                        <Dropdown transfer trigger="click" @on-click="handleClickUserDropdown">
-                            <a href="javascript:void(0)">
-                                <span class="main-user-name">{{ userName }}</span>
-                                <Icon type="arrow-down-b"></Icon>
-                            </a>
-                            <DropdownMenu slot="list">
-                                <DropdownItem name="ownSpace">个人中心</DropdownItem>
-                                <DropdownItem name="loginout" divided>退出登录</DropdownItem>
-                            </DropdownMenu>
-                        </Dropdown>
-                    </Row>
-                    </no-ssr>
-                </div>
+            <div class="ant-col-item">
+              <p>未确认</p>
+              <a>2</a>
             </div>
+          </div>
         </div>
-        <div class="tags-con">
-        <no-ssr>
-            <tags-page-opened :pageTagsList="pageTagsList"></tags-page-opened>
-        </no-ssr>
+        <div class="ant-col-3">
+          <h2>新增线索</h2>
+          <div class="ant-row">
+            <div class="ant-col-item">
+              <p>转线索（领取）</p>
+              <span>0</span>
+            </div>
+            <div class="ant-col-item">
+              <p>转线索（分配）</p>
+              <span>0</span>
+            </div>
+            <div class="ant-col-item">
+              <p>转线索（公海）</p>
+              <span>0</span>
+            </div>
+          </div>
         </div>
+        <div class="ant-col-3">
+          <h2>线索跟进</h2>
+          <div class="ant-row">
+            <div class="ant-col-item">
+              <p>跟进线索</p>
+              <span>10</span>
+            </div>
+            <div class="ant-col-item">
+              <p>写跟进次数</p>
+              <span>5</span>
+            </div>
+            <div class="ant-col-item">
+              <p>拜访次数</p>
+              <span>1</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="single-page-con" :style="{left: shrink?'60px':'200px'}">
-        <div class="single-page">
-            <no-ssr>
-            <nuxt-child :include="cachePage" />
-            </no-ssr>
-        </div>
+    <div class="ranking">
+      <header>
+        <h1>销售排行榜</h1>
+        <a href="">更多</a>
+      </header>
+      <div class="ranking-head">
+        <RadioGroup v-model="button2" type="button" @on-change="selectRankType">
+          <Radio v-for="item in rankItems" :value="item.value" :key="item.value" :label="item.label"></Radio>
+        </RadioGroup>
+      </div>
+      <div class="rank-list">
+        <Table :columns="columns1" :data="data1"></Table>
+      </div>
     </div>
-
   </div>
-
 </template>
-
 <script>
-    import { mapState } from 'vuex'
-    import shrinkableMenu from '../components/main-components/shrinkable-menu/shrinkable-menu.vue';
-    import tagsPageOpened from '../components/main-components/tags-page-opened.vue';
-
-    import breadcrumbNav from '../components/main-components/breadcrumb-nav.vue';
-    import lockScreen from '../components/main-components/lockscreen/lockscreen.vue';
-
-    import messageTip from '../components/main-components/message-tip.vue';
-    import Cookies from 'js-cookie';
-    import util from '@/libs/util.js';
-    import scrollBar from '../components/my-components/scroll-bar/vue-scroller-bars';
-
-    import {appRouter} from '../router/router';
-  
 export default {
-    components: {
-        shrinkableMenu,
-        tagsPageOpened,
-        breadcrumbNav,
-        lockScreen,
-        messageTip,
-        scrollBar
-    },
-    middleware: 'auth',  //定义页面中间件
-    head () {
-      return {
-        title: '首页'
+  head() {
+    return { title: '工作台' }
+  },
+  validate({ params }) {
+    return true
+    // return !isNaN(+params.id)
+  },
+  async asyncData({ params }) {
+    // console.log(params);
+    // let { data } = await axios.get(`https://my-api/posts/${params.id}`)
+    // return { title: data.title }
+  },
+  data() {
+    return {
+      typeList: [
+        {
+          value: '1',
+          label: '按部门统计'
+        },
+        {
+          value: '2',
+          label: '按人员统计'
+        }
+      ],
+      model1: '2',
+      initModel1: '2',
+      typeItems: [],
+      model2: '',
+      timeItems: [
+        {
+          value: '1',
+          label: '本周'
+        },
+        {
+          value: '2',
+          label: '本月'
+        }
+      ],
+      button1: '本周',
+      date: ['2016-01-01', '2016-02-15'],
+      rankItems: [
+        {
+          value: '1',
+          label: '已成交'
+        },
+        {
+          value: '2',
+          label: '已注册'
+        }
+      ],
+      button2: '已成交',
+      columns1: [
+        {
+          title: '排名',
+          key: 'rank',
+          className: 'one'
+        },
+        {
+          title: '销售',
+          key: 'name',
+          className: 'two'
+        },
+        {
+          title: '单数',
+          key: 'num',
+          className: 'four'
+        },
+        {
+          title: ' ',
+          key: 'progress',
+          width: 750,
+          render: (h, params) => {
+            // console.log(params.row)
+            let tipText = params.row.name + '：' + params.row.num
+            // 状态判断
+            return h('div', [
+              h(
+                'Tooltip',
+                {
+                  props: {
+                    content: tipText,
+                    placement: 'top-start'
+                  },
+                  style: {
+                    width: '100%'
+                  }
+                },
+                [
+                  h('Progress', {
+                    props: {
+                      percent: 25,
+                      hideInfo: ''
+                    }
+                  })
+                ]
+              )
+            ])
+          }
+        }
+      ],
+      data1: [
+        {
+          rank: '1',
+          name: '王大锤',
+          num: '34'
+        },
+        {
+          rank: '2',
+          name: '王大',
+          num: '87'
+        },
+        {
+          rank: '3',
+          name: '王企鹅',
+          num: '112'
+        },
+        {
+          rank: '4',
+          name: '老王',
+          num: '500'
+        }
+      ]
+    }
+  },
+  methods: {
+    selectType(v) {
+      if (this.initModel1 !== v) {
+        this.typeItems.push({ value: '1', label: '陈春娜' })
+        this.typeItems.push({ value: '2', label: '陈智鹏' })
+        this.typeItems.push({ value: '3', label: '王大锤' })
+        this.typeItems.push({ value: '4', label: '江小鱼' })
       }
     },
-    data () {
-            return {
-                shrink:false,
-                userName: '',
-                openedSubmenuArr: this.$store.state.app.openedSubmenuArr,
-            };
-        },
-    methods: {
-        init () {
-            let pathArr = util.setCurrentPath(this, this.$route.name);
-            this.$store.commit('updateMenulist');
-            if (pathArr.length >= 2) {
-                this.$store.commit('addOpenSubmenu', pathArr[1].name);
-            }
-            this.userName = Cookies.get('user');
-            let messageCount = 3;
-            this.messageCount = messageCount.toString();
-            this.checkTag(this.$route.name);
-            this.$store.commit('setMessageCount', 3);
-        },
-        link () {
-            this.$router.push({ name: 'other' })
-        },
-        toggleClick () {
-            this.shrink = !this.shrink;
-        },
-        handleClickUserDropdown (name) {
-            if (name === 'ownSpace') {
-                util.openNewPage(this, 'ownspace_index');
-                this.$router.push({
-                    name: 'ownspace_index'
-                });
-            } else if (name === 'loginout') {
-                // 退出登录
-                this.$store.commit('logout', this);
-                this.$store.commit('clearOpenedSubmenu');
-                this.$router.push({
-                    name: 'login'
-                });
-            }
-        },
-        checkTag (name) {
-            let openpageHasTag = this.pageTagsList.some(item => {
-
-                //console.log('openNewPage0000000000',item.name,name);
-                if (item.name === name) {
-                    return true;
-                }
-            });
-            if (!openpageHasTag) { //  解决关闭当前标签后再点击回退按钮会退到当前页时没有标签的问题
-                //console.log('openNewPage11111111111111111');
-                util.openNewPage(this, name, this.$route.params || {}, this.$route.query || {});
-            }
-        },
-        handleSubmenuChange (val) {
-            // console.log(val)
-        },
-        beforePush (name) {
-            // if (name === 'accesstest_index') {
-            //     return false;
-            // } else {
-            //     return true;
-            // }
-            return true;
-        },
-        scrollBarResize () {
-            this.$refs.scrollBar.resize();
+    selectTime(v) {
+      console.log(v)
+    },
+    selectRankType() {},
+    formatTime(time, fmt) {
+      var timetemp = new Date(time)
+      var o = {
+        'M+': timetemp.getMonth() + 1, // 月份
+        'd+': timetemp.getDate(), // 日
+        'h+': timetemp.getHours(), // 小时
+        'm+': timetemp.getMinutes(), // 分
+        's+': timetemp.getSeconds(), // 秒
+        'q+': Math.floor((timetemp.getMonth() + 3) / 3), // 季度
+        S: timetemp.getMilliseconds() // 毫秒
+      }
+      if (/(y+)/.test(fmt)) {
+        fmt = fmt.replace(
+          RegExp.$1,
+          (timetemp.getFullYear() + '').substr(4 - RegExp.$1.length)
+        )
+      }
+      for (var k in o) {
+        if (new RegExp('(' + k + ')').test(fmt)) {
+          fmt = fmt.replace(
+            RegExp.$1,
+            RegExp.$1.length === 1
+              ? o[k]
+              : ('00' + o[k]).substr(('' + o[k]).length)
+          )
         }
-    },
-    computed: {
-        menuList () {
-            return this.$store.state.app.menuList;
-        },
-        pageTagsList () {
-            return this.$store.state.app.pageOpenedList; // 打开的页面的页面对象
-        },
-        menuTheme () {
-            return this.$store.state.app.menuTheme;
-        },
-        currentPath () {
-            return this.$store.state.app.currentPath; // 当前面包屑数组
-        },
-        cachePage () {
-            return this.$store.state.app.cachePage;
-        },
-        lang () {
-            return this.$store.state.app.lang;
-        },
-        menuTheme () {
-            return this.$store.state.app.menuTheme;
-        },
-        mesCount () {
-            return this.$store.state.app.messageCount;
-        },
-        accordion(){
-            return this.$store.state.app.accordion;
-        }
-    },
-    watch: {
-        '$route' (to) {
-            this.$store.commit('setCurrentPageName', to.name);
-            let pathArr = util.setCurrentPath(this, to.name);
-            if (pathArr.length > 2) {
-                this.$store.commit('addOpenSubmenu', pathArr[1].name);
-            }
-            this.checkTag(to.name);
-            localStorage.currentPageName = to.name;
-            //this.$store.commit('setAccordion',true);
-        },
-        openedSubmenuArr () {
-            setTimeout(() => {
-                this.scrollBarResize();
-            }, 300);
-        }
-    },
-    mounted () {
-        this.init();
-        window.addEventListener('resize', this.scrollBarResize);
-
-        this.currentPageName = this.$route.name;
-        // 显示打开的页面的列表
-        this.$store.commit('setOpenedList');
-        this.$store.commit('initCachepage');
-        // 权限菜单过滤相关
-        this.$store.commit('updateMenulist');
-    },
-    created () {
-
-        let tagsList = [];
-        appRouter.map((item) => {
-            if (item.children.length <= 1) {
-                tagsList.push(item.children[0]);
-            } else {
-                tagsList.push(...item.children);
-            }
-        });
-        this.$store.commit('setTagsList', tagsList);
-        
-
-    },
-    dispatch () {
-        window.removeEventListener('resize', this.scrollBarResize);
+      }
+      return fmt
     }
-    
+  },
+  created() {
+    this.date[0] = this.formatTime(
+      new Date().getTime() - 86400000,
+      'yyyy-MM-dd'
+    )
+    this.date[1] = this.formatTime(new Date().getTime(), 'yyyy-MM-dd')
   }
+}
 </script>
+<style lang="less" scoped>
+.search {
+  width: 100%;
+  padding: 20px;
+  background-color: #fff;
+  table {
+    width: 100%;
+    border: 1px solid #e9e9e9;
+    border-collapse: collapse;
+  }
+  table tr {
+    border-bottom: 1px solid #e9e9e9;
+  }
+  table tr:last-child {
+    border-bottom: none;
+  }
+  table th {
+    width: 14%;
+    min-width: 150px;
+    padding-right: 30px;
+    vertical-align: middle;
+    line-height: 50px;
+    text-align: right;
+    font-weight: 400;
+    color: #919191;
+    background-color: #f7f7f7;
+  }
+  table td {
+    padding: 0 50px;
+    vertical-align: middle;
+  }
+  table td > * {
+    margin-right: 10px;
+  }
+  .ivu-col-span-12 {
+    width: auto;
+    display: inline-block;
+    float: none;
+  }
+}
 
+.brief {
+  background-color: #fff;
+  padding: 20px;
+  margin: 14px 14px 0;
+  overflow: hidden;
+  h1 {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 15px;
+  }
+  h2 {
+    font-size: 13px;
+    color: #919191;
+    margin-bottom: 10px;
+  }
+  .ant-col-3 {
+    display: block;
+    width: 33.33333333%;
+    float: left;
+    flex: 0 0 auto;
+    &:not(:first-child) {
+      padding-left: 20px;
+      border-left: 1px solid #e9e9e9;
+    }
+    .ant-row {
+      position: relative;
+      margin-left: 0;
+      margin-right: 0;
+      height: auto;
+      zoom: 1;
+      display: block;
+      p {
+        margin-bottom: 12px;
+      }
+      a {
+        margin-bottom: 10px;
+        font-size: 28px;
+        color: #08f;
+        &:hover {
+          color: #3da4ff;
+        }
+      }
+      span {
+        margin-bottom: 10px;
+        font-size: 28px;
+        color: #919191;
+      }
+    }
+    .ant-col-item {
+      display: block;
+      width: 33.33333333%;
+      float: left;
+      flex: 0 0 auto;
+    }
+  }
+}
 
+.ranking {
+  background-color: #fff;
+  padding: 20px;
+  margin: 14px 14px 0;
+  overflow: hidden;
+  header {
+    margin-bottom: 20px;
+    position: relative;
+    a {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      -webkit-transform: translateY(-50%);
+      transform: translateY(-50%);
+    }
+    h1 {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 15px;
+    }
+    h2 {
+      font-size: 13px;
+      color: #919191;
+      margin-bottom: 10px;
+    }
+  }
+  .rank-list {
+    padding-top: 20px;
+    width: 100%;
+    position: relative;
+    & /deep/ .ivu-tooltip-rel {
+      width: 100%;
+    }
+    & /deep/ .ivu-progress-inner {
+      background: none;
+    }
+  }
+}
+</style>
