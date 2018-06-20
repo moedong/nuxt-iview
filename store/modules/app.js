@@ -11,18 +11,12 @@ const app = {
     openedSubmenuArr: [], // 要展开的菜单数组
     menuTheme: 'dark', // 主题
     themeColor: '',
-    pageOpenedList: [
-      {
-        title: '首页',
-        path: '',
-        name: 'home_index'
-      }
-    ],
+    pageOpenedList: [],
     currentPageName: '',
     currentPath: [], // 面包屑数组
     menuList: [],
-    routers: [otherRouter, ...appRouter],
-    tagsList: [...appRouter],
+    routers: [otherRouter, ...appRouter], // 总路由
+    tagsList: [otherRouter, ...appRouter], // tags-page-opened
     messageCount: 0,
     accordion: true,
     dontCache: ['text-editor', 'artical-publish'] // 在这里定义你不想要缓存的页面的name属性值(参见路由配置router.js)
@@ -160,7 +154,7 @@ const app = {
       localStorage.pageOpenedList = JSON.stringify(state.pageOpenedList)
     },
     setOpenedList(state) {
-      state.pageOpenedList = [otherRouter.children[0]]
+      state.pageOpenedList = []
     },
     setCurrentPath(state, pathArr) {
       state.currentPath = pathArr

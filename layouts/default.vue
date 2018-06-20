@@ -89,7 +89,7 @@ export default {
   data() {
     return {
       shrink: false,
-      userName:'',
+      userName: '',
       openedSubmenuArr: this.$store.state.app.openedSubmenuArr,
       activeMenuName: this.$route.name,
       msgCount: 5,
@@ -98,7 +98,7 @@ export default {
   },
   methods: {
     init() {
-      this.$store.commit('setAccordion',true);
+      this.$store.commit('setAccordion', true)
       this.userName = Cookies.get('user')
       let messageCount = 3
       this.messageCount = messageCount.toString()
@@ -126,7 +126,7 @@ export default {
       }
     },
     checkTag(name) {
-      //console.log('pageTagsList--------', this.pageTagsList)
+      // console.log('pageTagsList--------', this.pageTagsList)
       let openpageHasTag = this.pageTagsList.some(item => {
         console.log('openpageHasTag--------', item.name)
         if (item.name === name) {
@@ -192,8 +192,8 @@ export default {
         this.$store.commit('addOpenSubmenu', pathArr[1].name)
       }
       this.checkTag(to.name)
-      // localStorage.currentPageName = to.name
-      // this.$store.commit('setAccordion',true);
+      localStorage.currentPageName = to.name
+      this.$store.commit('setAccordion', true)
     },
     openedSubmenuArr() {
       setTimeout(() => {
@@ -203,14 +203,16 @@ export default {
   },
   mounted() {
     // this.init()
-    this.$store.commit('setOpenedList')
+    //this.$store.commit('setOpenedList')
     this.checkTag(this.$route.name)
     window.addEventListener('resize', this.scrollBarResize)
   },
   created() {
+    /**服务端渲染左侧导航条及pannel页面内容**/
     this.currentPageName = this.$route.name
     util.setCurrentPath(this, this.$route.name)
     this.$store.commit('updateMenulist')
+    /**服务端渲染左侧导航条及pannel页面内容**/
   },
   dispatch() {
     window.removeEventListener('resize', this.scrollBarResize)

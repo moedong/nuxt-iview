@@ -1,6 +1,6 @@
 let util = {}
 
-util.inOf = function (arr, targetArr) {
+util.inOf = function(arr, targetArr) {
   let res = true
   arr.forEach(item => {
     if (targetArr.indexOf(item) < 0) {
@@ -10,7 +10,7 @@ util.inOf = function (arr, targetArr) {
   return res
 }
 
-util.oneOf = function (ele, targetArr) {
+util.oneOf = function(ele, targetArr) {
   if (targetArr.indexOf(ele) >= 0) {
     return true
   } else {
@@ -18,7 +18,7 @@ util.oneOf = function (ele, targetArr) {
   }
 }
 
-util.showThisRoute = function (itAccess, currentAccess) {
+util.showThisRoute = function(itAccess, currentAccess) {
   if (typeof itAccess === 'object' && Array.isArray(itAccess)) {
     return util.oneOf(currentAccess, itAccess)
   } else {
@@ -26,7 +26,7 @@ util.showThisRoute = function (itAccess, currentAccess) {
   }
 }
 
-util.getRouterObjByName = function (routers, name) {
+util.getRouterObjByName = function(routers, name) {
   if (!name || !routers || !routers.length) {
     return null
   }
@@ -44,7 +44,7 @@ util.getRouterObjByName = function (routers, name) {
   return null
 }
 
-util.handleTitle = function (vm, item) {
+util.handleTitle = function(vm, item) {
   return item.title
   /* if (typeof item.title === 'object') {
     return vm.$t(item.title.i18n)
@@ -53,7 +53,7 @@ util.handleTitle = function (vm, item) {
   } */
 }
 
-util.setCurrentPath = function (vm, name) {
+util.setCurrentPath = function(vm, name) {
   // console.log('-----setCurrentPath-----', name)
   let title = ''
   let isOtherRouter = false
@@ -178,12 +178,12 @@ util.setCurrentPath = function (vm, name) {
   return currentPathArr
 }
 
-util.openNewPage = function (vm, name, argu, query) {
+util.openNewPage = function(vm, name, argu, query) {
   let pageOpenedList = vm.$store.state.app.pageOpenedList
   let openedPageLen = pageOpenedList.length
   let i = 0
   let tagHasOpened = false
-  // console.log('openedPageLen-------', openedPageLen)
+  console.log('openedPageLen-------', openedPageLen)
   while (i < openedPageLen) {
     if (name === pageOpenedList[i].name) {
       // 页面已经打开
@@ -199,18 +199,33 @@ util.openNewPage = function (vm, name, argu, query) {
   }
   // console.log('tagHasOpened-------------', !tagHasOpened)
   if (!tagHasOpened) {
+    let childrenIndex = 0
     let tag = vm.$store.state.app.tagsList.filter(item => {
       // console.log('tagHasOpened222222-------------', item.name)
       if (item.children) {
-        return name === item.children[0].name
+        let i = 0
+        while (i < item.children.length) {
+          // console.log(i)
+          // console.log(item.children[i].name, name)
+          if (item.children[i].name === name) {
+            childrenIndex = i
+            return true
+          }
+          i++
+        }
+        return false
       } else {
         return name === item.name
       }
     })
     tag = tag[0]
     // console.log('tag--------------', tag)
+    // console.log('i--------------', childrenIndex)
+    // console.log('tag.children--------------', tag.children[0])
+
     if (tag) {
-      tag = tag.children ? tag.children[0] : tag
+      tag = tag.children ? tag.children[childrenIndex] : tag
+      // console.log('tag--------------', tag)
       if (argu) {
         tag.argu = argu
       }
@@ -223,7 +238,7 @@ util.openNewPage = function (vm, name, argu, query) {
   vm.$store.commit('setCurrentPageName', name)
 }
 
-util.toDefaultPage = function (routers, name, route, next) {
+util.toDefaultPage = function(routers, name, route, next) {
   let len = routers.length
   let i = 0
   let notHandle = true
@@ -247,7 +262,7 @@ util.toDefaultPage = function (routers, name, route, next) {
   }
 }
 
-util.fullscreenEvent = function (vm) {
+util.fullscreenEvent = function(vm) {
   vm.$store.commit('initCachepage')
   // 权限菜单过滤相关
   vm.$store.commit('updateMenulist')

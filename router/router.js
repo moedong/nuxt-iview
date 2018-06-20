@@ -3,37 +3,18 @@
 export const otherRouter = {
   path: '/',
   name: 'otherRouter',
-  redirect: '/home',
   children: [
     {
-      path: 'home',
-      title: { i18n: 'home' },
-      name: 'home_index'
-    },
-    {
-      path: 'message',
-      title: '消息中心',
-      name: 'message_index'
+      path: '/index',
+      title: '主页',
+      name: 'index',
+      icon: 'ios-home'
     }
   ]
 }
 
 // 作为Main组件的子页面展示并且在左侧菜单显示的路由写在appRouter里
 export const appRouter = [
-  {
-    path: '/',
-    icon: 'ios-home',
-    name: 'index-base',
-    title: '主页',
-    children: [
-      {
-        path: '/index',
-        title: '主页',
-        name: 'index',
-        icon: 'ios-home'
-      }
-    ]
-  },
   {
     path: '/form',
     icon: 'android-checkbox',
@@ -55,15 +36,48 @@ export const appRouter = [
     ]
   },
   {
+    path: '/tables',
+    icon: 'ios-grid-view',
+    title: '表格',
+    name: 'tables',
+    children: [
+      {
+        path: '/tables/dragable-table',
+        title: '可拖拽排序',
+        icon: 'arrow-move',
+        name: 'tables-dragable-table'
+      },
+      {
+        path: '/tables/editable-table',
+        title: '可编辑表格',
+        icon: 'edit',
+        name: 'tables-editable-table'
+      }
+    ]
+  },
+  {
     path: '/error-page',
     icon: 'android-sad',
     title: '错误页面',
     name: 'errorpage',
     children: [
       {
-        path: '/error-page/error-page',
-        title: '错误页面',
-        name: 'error-page-error-page'
+        path: '/error-page/403',
+        title: '403错误',
+        name: 'error-page-403',
+        icon: 'close-circled'
+      },
+      {
+        path: '/error-page/404',
+        title: '404错误',
+        name: 'error-page-404',
+        icon: 'alert-circled'
+      },
+      {
+        path: '/error-page/500',
+        title: '500错误',
+        name: 'error-page-500',
+        icon: 'settings'
       }
     ]
   }
