@@ -183,7 +183,7 @@ util.openNewPage = function(vm, name, argu, query) {
   let openedPageLen = pageOpenedList.length
   let i = 0
   let tagHasOpened = false
-  console.log('openedPageLen-------', openedPageLen)
+  // console.log('openedPageLen-------', openedPageLen)
   while (i < openedPageLen) {
     if (name === pageOpenedList[i].name) {
       // 页面已经打开
