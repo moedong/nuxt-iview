@@ -24,7 +24,7 @@ $ npm run dev
 
 相关页面效果
 
-截图一：
+截图一： 账号和密码随意填写
 
 ![截图1](./screenshot/sc1.png)
 
