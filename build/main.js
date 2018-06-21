@@ -8,9 +8,9 @@ module.exports =
 /******/ 	function __webpack_require__(moduleId) {
 /******/
 /******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId])
+/******/ 		if(installedModules[moduleId]) {
 /******/ 			return installedModules[moduleId].exports;
-/******/
+/******/ 		}
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
 /******/ 			i: moduleId,
@@ -34,9 +34,6 @@ module.exports =
 /******/
 /******/ 	// expose the module cache
 /******/ 	__webpack_require__.c = installedModules;
-/******/
-/******/ 	// identity function for calling harmony imports with the correct context
-/******/ 	__webpack_require__.i = function(value) { return value; };
 /******/
 /******/ 	// define getter function for harmony exports
 /******/ 	__webpack_require__.d = function(exports, name, getter) {
@@ -65,25 +62,169 @@ module.exports =
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 15);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(14);
+module.exports = __webpack_require__(3);
 
 
-/***/ },
+/***/ }),
 /* 1 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 module.exports = require("koa-router");
 
-/***/ },
+/***/ }),
 /* 2 */
-/***/ function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_E_node_nuxt_demo_node_modules_babel_runtime_6_26_0_babel_runtime_regenerator__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_E_node_nuxt_demo_node_modules_babel_runtime_6_26_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_E_node_nuxt_demo_node_modules_babel_runtime_6_26_0_babel_runtime_regenerator__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_koa__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_koa___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_koa__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_nuxt__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_nuxt___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_nuxt__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_koa_session2__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_koa_session2___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_koa_session2__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_koa_bodyparser__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_koa_bodyparser___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_koa_bodyparser__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_koa_router__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_koa_router___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_koa_router__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_koa_logger__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_koa_logger___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_koa_logger__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__routers__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__koa_cors__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__koa_cors___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__koa_cors__);
+
+
+var start = function () {
+  var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_E_node_nuxt_demo_node_modules_babel_runtime_6_26_0_babel_runtime_regenerator___default.a.mark(function _callee2() {
+    var _this = this;
+
+    var app, host, port, router, config, nuxt, builder;
+    return __WEBPACK_IMPORTED_MODULE_0_E_node_nuxt_demo_node_modules_babel_runtime_6_26_0_babel_runtime_regenerator___default.a.wrap(function _callee2$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            app = new __WEBPACK_IMPORTED_MODULE_1_koa___default.a();
+            host = process.env.HOST || '127.0.0.1';
+            port = process.env.PORT || 3000;
+
+            // session必须在路由前注册
+
+            app.use(__WEBPACK_IMPORTED_MODULE_3_koa_session2___default()({
+              key: '12345',
+              overwrite: true
+            }));
+            // 配置控制台日志中间件
+            app.use(__WEBPACK_IMPORTED_MODULE_6_koa_logger___default()());
+            app.use(__WEBPACK_IMPORTED_MODULE_8__koa_cors___default()());
+            app.use(__WEBPACK_IMPORTED_MODULE_4_koa_bodyparser___default()());
+
+            router = new __WEBPACK_IMPORTED_MODULE_5_koa_router___default.a();
+
+            router.use('', __WEBPACK_IMPORTED_MODULE_7__routers__["a" /* default */].routes());
+            app.use(router.routes()).use(router.allowedMethods());
+
+            // Import and Set Nuxt.js options
+            config = __webpack_require__(4);
+
+            config.dev = !(app.env === 'production');
+
+            // Instantiate nuxt.js
+            nuxt = new __WEBPACK_IMPORTED_MODULE_2_nuxt__["Nuxt"](config);
+
+            // Build in development
+
+            if (!config.dev) {
+              _context2.next = 17;
+              break;
+            }
+
+            builder = new __WEBPACK_IMPORTED_MODULE_2_nuxt__["Builder"](nuxt);
+            _context2.next = 17;
+            return builder.build();
+
+          case 17:
+
+            app.use(function () {
+              var _ref2 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_E_node_nuxt_demo_node_modules_babel_runtime_6_26_0_babel_runtime_regenerator___default.a.mark(function _callee(ctx, next) {
+                return __WEBPACK_IMPORTED_MODULE_0_E_node_nuxt_demo_node_modules_babel_runtime_6_26_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
+                  while (1) {
+                    switch (_context.prev = _context.next) {
+                      case 0:
+                        _context.next = 2;
+                        return next();
+
+                      case 2:
+                        ctx.status = 200; // koa defaults to 404 when it sees that status is unset
+                        ctx.req.session = ctx.session; // 必须将session添加进request中，否则nuxt的req获取不到session
+                        return _context.abrupt('return', new Promise(function (resolve, reject) {
+                          ctx.res.on('close', resolve);
+                          ctx.res.on('finish', resolve);
+                          nuxt.render(ctx.req, ctx.res, function (promise) {
+                            // nuxt.render passes a rejected promise into callback on error.
+                            promise.then(resolve).catch(reject);
+                          });
+                        }));
+
+                      case 5:
+                      case 'end':
+                        return _context.stop();
+                    }
+                  }
+                }, _callee, _this);
+              }));
+
+              return function (_x, _x2) {
+                return _ref2.apply(this, arguments);
+              };
+            }());
+
+            app.listen(port, host);
+            console.log('Server listening on ' + host + ':' + port); // eslint-disable-line no-console
+
+          case 20:
+          case 'end':
+            return _context2.stop();
+        }
+      }
+    }, _callee2, this);
+  }));
+
+  return function start() {
+    return _ref.apply(this, arguments);
+  };
+}();
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
+
+
+
+
+
+
+
+
+
+start();
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports) {
+
+module.exports = require("regenerator-runtime");
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports) {
 
 module.exports = {
   /*
@@ -119,9 +260,39 @@ module.exports = {
   }
 };
 
-/***/ },
-/* 3 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ }),
+/* 5 */
+/***/ (function(module, exports) {
+
+module.exports = require("koa");
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports) {
+
+module.exports = require("nuxt");
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports) {
+
+module.exports = require("koa-session2");
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports) {
+
+module.exports = require("koa-bodyparser");
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports) {
+
+module.exports = require("koa-logger");
+
+/***/ }),
+/* 10 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_koa_router__ = __webpack_require__(1);
@@ -131,76 +302,28 @@ module.exports = {
 
 var router = new __WEBPACK_IMPORTED_MODULE_0_koa_router___default.a();
 
-router.get('/api/user', __WEBPACK_IMPORTED_MODULE_1__controller_user__["a" /* userinfo */]);
-router.post('/api/login', __WEBPACK_IMPORTED_MODULE_1__controller_user__["b" /* login */]);
-router.post('/api/logout', __WEBPACK_IMPORTED_MODULE_1__controller_user__["c" /* logout */]);
-router.get('/api/logout', __WEBPACK_IMPORTED_MODULE_1__controller_user__["c" /* logout */]);
+router.get('/api/user', __WEBPACK_IMPORTED_MODULE_1__controller_user__["c" /* userinfo */]);
+router.post('/api/login', __WEBPACK_IMPORTED_MODULE_1__controller_user__["a" /* login */]);
+router.post('/api/logout', __WEBPACK_IMPORTED_MODULE_1__controller_user__["b" /* logout */]);
+router.get('/api/logout', __WEBPACK_IMPORTED_MODULE_1__controller_user__["b" /* logout */]);
 
-/* harmony default export */ exports["a"] = router;
+/* harmony default export */ __webpack_exports__["a"] = (router);
 
-/***/ },
-/* 4 */
-/***/ function(module, exports) {
-
-module.exports = require("@koa/cors");
-
-/***/ },
-/* 5 */
-/***/ function(module, exports) {
-
-module.exports = require("koa");
-
-/***/ },
-/* 6 */
-/***/ function(module, exports) {
-
-module.exports = require("koa-bodyparser");
-
-/***/ },
-/* 7 */
-/***/ function(module, exports) {
-
-module.exports = require("koa-logger");
-
-/***/ },
-/* 8 */
-/***/ function(module, exports) {
-
-module.exports = require("koa-session2");
-
-/***/ },
-/* 9 */
-/***/ function(module, exports) {
-
-module.exports = require("nuxt");
-
-/***/ },
-/* 10 */
-/***/ function(module, exports, __webpack_require__) {
-
-"use strict";
-var config = {
-  base_url: 'https://crmback.tiaoweilian.com',
-  sign_key: 'RFHIJUGVCFTRQKJMJKNHGBIOJUHGBNFG'
-};
-
-/* harmony default export */ exports["a"] = config;
-
-/***/ },
+/***/ }),
 /* 11 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return userinfo; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return login; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return logout; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_E_node_nuxt_demo_node_modules_babel_runtime_6_26_0_babel_runtime_regenerator__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_E_node_nuxt_demo_node_modules_babel_runtime_6_26_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_E_node_nuxt_demo_node_modules_babel_runtime_6_26_0_babel_runtime_regenerator__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_axios__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__config__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_axios_mock_adapter__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__config__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_axios_mock_adapter__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_axios_mock_adapter___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_axios_mock_adapter__);
-/* harmony export (binding) */ __webpack_require__.d(exports, "a", function() { return userinfo; });
-/* harmony export (binding) */ __webpack_require__.d(exports, "b", function() { return login; });
-/* harmony export (binding) */ __webpack_require__.d(exports, "c", function() { return logout; });
 
 
 var _this = this;
@@ -213,7 +336,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
 var mock = new __WEBPACK_IMPORTED_MODULE_3_axios_mock_adapter___default.a(__WEBPACK_IMPORTED_MODULE_1_axios___default.a);
 mock.onPost(__WEBPACK_IMPORTED_MODULE_2__config__["a" /* default */].base_url + '/api/v1.user/login').reply(function (config) {
-  return [200, { 'ret': 200, 'msg': '请求成功', 'data': { 'code': 0, 'message': '登录成功', 'token': 'PhU0Sd9zwUSwOQgXnJpj7pgSwdA7YD80', 'id': 1, 'mobile': '13570267076', 'name': '阿鹏', 'sex': 1, 'status': 1, 'role_id': 1, 'depart_id': 1, 'leader_id': 0 } }];
+  return [200, { 'ret': 200, 'msg': '请求成功', 'data': { 'code': 0, 'message': '登录成功', 'token': 'PhU0Sd9zwUSwOQgXnJpj7pgSwdA7YD80', 'id': 1, 'mobile': '13770267077', 'name': '大鹏', 'sex': 1, 'status': 1, 'role_id': 1, 'depart_id': 1, 'leader_id': 0 } }];
 });
 
 var userinfo = function () {
@@ -411,162 +534,36 @@ var logout = function () {
   };
 }();
 
-/***/ },
+/***/ }),
 /* 12 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 module.exports = require("axios");
 
-/***/ },
+/***/ }),
 /* 13 */
-/***/ function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var config = {
+  base_url: 'https://crmback.tiaoweilian.com',
+  sign_key: 'RFHIJUGVCFTRQKJMJKNHGBIOJUHGBNFG'
+};
+
+/* harmony default export */ __webpack_exports__["a"] = (config);
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports) {
 
 module.exports = require("axios-mock-adapter");
 
-/***/ },
-/* 14 */
-/***/ function(module, exports) {
-
-module.exports = require("regenerator-runtime");
-
-/***/ },
+/***/ }),
 /* 15 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_E_node_nuxt_demo_node_modules_babel_runtime_6_26_0_babel_runtime_regenerator__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_E_node_nuxt_demo_node_modules_babel_runtime_6_26_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_E_node_nuxt_demo_node_modules_babel_runtime_6_26_0_babel_runtime_regenerator__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_koa__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_koa___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_koa__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_nuxt__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_nuxt___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_nuxt__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_koa_session2__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_koa_session2___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_koa_session2__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_koa_bodyparser__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_koa_bodyparser___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_koa_bodyparser__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_koa_router__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_koa_router___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_koa_router__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_koa_logger__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_koa_logger___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_koa_logger__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__routers__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__koa_cors__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__koa_cors___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__koa_cors__);
+module.exports = require("@koa/cors");
 
-
-var start = function () {
-  var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_E_node_nuxt_demo_node_modules_babel_runtime_6_26_0_babel_runtime_regenerator___default.a.mark(function _callee2() {
-    var _this = this;
-
-    var app, host, port, router, config, nuxt, builder;
-    return __WEBPACK_IMPORTED_MODULE_0_E_node_nuxt_demo_node_modules_babel_runtime_6_26_0_babel_runtime_regenerator___default.a.wrap(function _callee2$(_context2) {
-      while (1) {
-        switch (_context2.prev = _context2.next) {
-          case 0:
-            app = new __WEBPACK_IMPORTED_MODULE_1_koa___default.a();
-            host = process.env.HOST || '127.0.0.1';
-            port = process.env.PORT || 3000;
-
-            // session必须在路由前注册
-
-            app.use(__WEBPACK_IMPORTED_MODULE_3_koa_session2___default()({
-              key: '12345',
-              overwrite: true
-            }));
-            // 配置控制台日志中间件
-            app.use(__WEBPACK_IMPORTED_MODULE_6_koa_logger___default()());
-            app.use(__WEBPACK_IMPORTED_MODULE_8__koa_cors___default()());
-            app.use(__WEBPACK_IMPORTED_MODULE_4_koa_bodyparser___default()());
-
-            router = new __WEBPACK_IMPORTED_MODULE_5_koa_router___default.a();
-
-            router.use('', __WEBPACK_IMPORTED_MODULE_7__routers__["a" /* default */].routes());
-            app.use(router.routes()).use(router.allowedMethods());
-
-            // Import and Set Nuxt.js options
-            config = __webpack_require__(2);
-
-            config.dev = !(app.env === 'production');
-
-            // Instantiate nuxt.js
-            nuxt = new __WEBPACK_IMPORTED_MODULE_2_nuxt__["Nuxt"](config);
-
-            // Build in development
-
-            if (!config.dev) {
-              _context2.next = 17;
-              break;
-            }
-
-            builder = new __WEBPACK_IMPORTED_MODULE_2_nuxt__["Builder"](nuxt);
-            _context2.next = 17;
-            return builder.build();
-
-          case 17:
-
-            app.use(function () {
-              var _ref2 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_E_node_nuxt_demo_node_modules_babel_runtime_6_26_0_babel_runtime_regenerator___default.a.mark(function _callee(ctx, next) {
-                return __WEBPACK_IMPORTED_MODULE_0_E_node_nuxt_demo_node_modules_babel_runtime_6_26_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
-                  while (1) {
-                    switch (_context.prev = _context.next) {
-                      case 0:
-                        _context.next = 2;
-                        return next();
-
-                      case 2:
-                        ctx.status = 200; // koa defaults to 404 when it sees that status is unset
-                        ctx.req.session = ctx.session; // 必须将session添加进request中，否则nuxt的req获取不到session
-                        return _context.abrupt('return', new Promise(function (resolve, reject) {
-                          ctx.res.on('close', resolve);
-                          ctx.res.on('finish', resolve);
-                          nuxt.render(ctx.req, ctx.res, function (promise) {
-                            // nuxt.render passes a rejected promise into callback on error.
-                            promise.then(resolve).catch(reject);
-                          });
-                        }));
-
-                      case 5:
-                      case 'end':
-                        return _context.stop();
-                    }
-                  }
-                }, _callee, _this);
-              }));
-
-              return function (_x, _x2) {
-                return _ref2.apply(this, arguments);
-              };
-            }());
-
-            app.listen(port, host);
-            console.log('Server listening on ' + host + ':' + port); // eslint-disable-line no-console
-
-          case 20:
-          case 'end':
-            return _context2.stop();
-        }
-      }
-    }, _callee2, this);
-  }));
-
-  return function start() {
-    return _ref.apply(this, arguments);
-  };
-}();
-
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
-
-
-
-
-
-
-
-
-
-
-start();
-
-/***/ }
+/***/ })
 /******/ ]);
 //# sourceMappingURL=main.map

@@ -93,13 +93,13 @@ export default {
             this.loading = false
             return false
           }
-          if (req.data.ret !== 200) {
+          if (!!req.data && req.data.ret !== 200) {
             let msg = req.data.msg || '失败'
             this.$Message.error({ content: msg, duration: 2, closable: true })
             this.loading = false
             return false
           }
-          if (req.data.data.code !== 0) {
+          if (!!req.data && req.data.data.code !== 0) {
             let msg = req.data.data.message || '登录失败'
             this.$Message.error({ content: msg, duration: 2, closable: true })
             this.loading = false

@@ -1,0 +1,22 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "npm run dev",
+      "protocol": "inspector",
+      // "program": "${workspaceRoot}/node_modules/nuxt/bin/nuxt",
+      // "args": ["dev"],
+      // "stopOnEntry": false,
+      // "cwd": "${workspaceRoot}",
+      // "sourceMaps": true,
+      // "env": {
+      //   "NODE_ENV": "development",
+      //   "DEBUG": "nuxt:*,app"
+      // },
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run-script", "dev-debug"]
+    }
+  ]
+}

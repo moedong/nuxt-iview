@@ -16,7 +16,7 @@ const store = () =>
     actions: {
       nuxtServerInit: async ({ commit }, { req, res }) => {
         // console.log('nuxtServerInit', res.session)
-        if (req.session && req.session.user && req.session.user.token) {
+        if (!!req.session && !!req.session.user && !!req.session.user.token) {
           commit('LOGIN', req.session)
         } else {
           commit('LOGOUT')
