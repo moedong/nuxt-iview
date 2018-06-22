@@ -126,7 +126,7 @@ util.setCurrentPath = function(vm, name) {
       }
     })[0]
 
-    if (currentPathObj.children.length <= 1 && currentPathObj.name === 'home') {
+    if (currentPathObj.name === 'home' && currentPathObj.children.length <= 1) {
       currentPathArr = [
         {
           title: '首页',

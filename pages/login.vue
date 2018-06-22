@@ -109,7 +109,7 @@ export default {
           console.log('info', req.data.data.info)
           this.$store.commit('SET_TOKEN', req.data.data.token)
           this.$store.commit('SET_USERINFO', req.data.data.info)
-
+          this.$store.commit('setAvator', 'https://avatars3.githubusercontent.com/u/12723410?s=460&v=4');
           this.$Message.success('恭喜您，登录成功！')
           let route = {
             path: '/'

@@ -19,6 +19,7 @@ const app = {
     tagsList: [otherRouter, ...appRouter], // tags-page-opened
     messageCount: 0,
     accordion: true,
+    avatorImgPath: '',
     dontCache: ['text-editor', 'artical-publish'] // 在这里定义你不想要缓存的页面的name属性值(参见路由配置router.js)
   },
   mutations: {
@@ -163,7 +164,13 @@ const app = {
       state.currentPageName = name
     },
     setAvator(state, path) {
-      // localStorage.avatorImgPath = path
+      if (path) {
+        localStorage.avatorImgPath = path
+        state.avatorImgPath = path
+      } else {
+        state.avatorImgPath = localStorage.avatorImgPath
+      }
+      console.log('avatorImgPath', state.avatorImgPath)
     },
     switchLang(state, lang) {
       state.lang = lang

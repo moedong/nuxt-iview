@@ -43,6 +43,7 @@
                     <DropdownItem name="loginout" divided>退出登录</DropdownItem>
                   </DropdownMenu>
                 </Dropdown>
+                <Avatar :src="avatorPath" style="background: #619fe7;margin-left: 10px;"></Avatar>
               </Row>
             </div>
           </div>
@@ -70,6 +71,8 @@ import messageTip from '../components/main-components/message-tip.vue'
 import Cookies from 'js-cookie'
 import util from '@/libs/util.js'
 import scrollBar from '../components/my-components/scroll-bar/vue-scroller-bars'
+// 这里特别提示，登陆和退出，以及需要koa2端请求接口的，使用axios2插件
+import axios from '~/plugins/axios2'
 
 export default {
   middleware: 'auth', // 定义页面中间件
@@ -110,7 +113,7 @@ export default {
     toggleClick() {
       this.shrink = !this.shrink
     },
-    handleClickUserDropdown(name) {
+    async handleClickUserDropdown(name) {
       if (name === 'ownSpace') {
         util.openNewPage(this, 'ownspace_index')
         this.$router.push({
@@ -118,11 +121,17 @@ export default {
         })
       } else if (name === 'loginout') {
         // 退出登录
-        this.$store.commit('logout', this)
-        this.$store.commit('clearOpenedSubmenu')
-        this.$router.push({
-          name: 'login'
-        })
+        let req = await axios.get('/api/logout')
+        if (req.data.data.code !== 0) {
+          let msg = req.data.data.message || '退出失败'
+          this.$Message.error({ content: msg, duration: 2, closable: true })
+          return false
+        }
+        this.$Message.success('退出成功')
+        this.$store.commit('LOGOUT')
+        //window.location.href = 'login'
+        this.$store.dispatch('LOGOUT')
+        .then(() => this.$router.go({ path: 'login' }))
       }
     },
     checkTag(name) {
@@ -171,6 +180,9 @@ export default {
     currentPath() {
       return this.$store.state.app.currentPath // 当前面包屑数组
     },
+    avatorPath() {
+      return this.$store.state.app.avatorImgPath
+    },
     cachePage() {
       return this.$store.state.app.cachePage
     },
@@ -205,6 +217,8 @@ export default {
     // this.init()
     //this.$store.commit('setOpenedList')
     this.checkTag(this.$route.name)
+    //刷新页面时，重新获取头像
+    this.$store.commit('setAvator', '')
     window.addEventListener('resize', this.scrollBarResize)
   },
   created() {

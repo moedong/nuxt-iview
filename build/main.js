@@ -241,7 +241,7 @@ module.exports = {
   plugins: [{ src: '~plugins/flexible.js', ssr: false }, { src: '~plugins/iview.js', ssr: true }],
   loading: './components/loading.vue',
   env: {
-    NODE_ENV: "production"
+    NODE_ENV: "development"
   },
   cache: {
     max: 1000,

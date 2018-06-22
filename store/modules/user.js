@@ -40,6 +40,14 @@ const user = {
       state.sign_key = null
       state.info = {}
     }
+  },
+  actions: {
+    // 登出
+    LOGOUT: state => {
+      state.token = null
+      state.sign_key = null
+      state.info = {}
+    }
   }
 }
 
