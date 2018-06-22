@@ -6,6 +6,8 @@ import Router from 'koa-router'
 import koaLogger from 'koa-logger'
 import route from './routers'
 import cors from '@koa/cors'
+import koaStatic from 'koa-static'
+import path from 'path'
 
 async function start() {
   const app = new Koa()
@@ -21,6 +23,10 @@ async function start() {
   )
   // 配置控制台日志中间件
   app.use(koaLogger())
+
+  // 配置静态资源加载中间件
+  app.use(koaStatic(path.join(__dirname, './src')))
+
   app.use(cors())
   app.use(bodyParser())
 

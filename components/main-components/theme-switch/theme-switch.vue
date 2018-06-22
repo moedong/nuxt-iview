@@ -19,7 +19,9 @@
 
 <script>
 import Cookies from 'js-cookie';
-import config from '../../../../build/config.js';
+const config = {
+    env: 'development'
+};
 export default {
     name: 'themeSwitch',
     data () {
@@ -114,7 +116,7 @@ export default {
             }
             let stylePath = '';
             if (config.env.indexOf('dev') > -1) {
-                stylePath = './src/views/main-components/theme-switch/theme/';
+                stylePath = '/theme/';
             } else {
                 stylePath = 'dist/';
             }
@@ -126,10 +128,10 @@ export default {
             themeLink.setAttribute('href', path);
         }
     },
-    created () {
+    mounted () {
         let path = '';
         if (config.env.indexOf('dev') > -1) {
-            path = './src/views/main-components/theme-switch/theme/';
+            path = '/theme/';
         } else {
             path = 'dist/';
         }

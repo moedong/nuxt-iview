@@ -84,7 +84,7 @@ module.exports = require("koa-router");
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_E_node_nuxt_demo_node_modules_babel_runtime_6_26_0_babel_runtime_regenerator__ = __webpack_require__(0);
+/* WEBPACK VAR INJECTION */(function(__dirname) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_E_node_nuxt_demo_node_modules_babel_runtime_6_26_0_babel_runtime_regenerator__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_E_node_nuxt_demo_node_modules_babel_runtime_6_26_0_babel_runtime_regenerator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_E_node_nuxt_demo_node_modules_babel_runtime_6_26_0_babel_runtime_regenerator__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_koa__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_koa___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_koa__);
@@ -101,6 +101,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__routers__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__koa_cors__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__koa_cors___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__koa_cors__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_koa_static__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_koa_static___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_koa_static__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_path__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_path___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10_path__);
 
 
 var start = function () {
@@ -124,6 +128,10 @@ var start = function () {
             }));
             // 配置控制台日志中间件
             app.use(__WEBPACK_IMPORTED_MODULE_6_koa_logger___default()());
+
+            // 配置静态资源加载中间件
+            app.use(__WEBPACK_IMPORTED_MODULE_9_koa_static___default()(__WEBPACK_IMPORTED_MODULE_10_path___default.a.join(__dirname, './src')));
+
             app.use(__WEBPACK_IMPORTED_MODULE_8__koa_cors___default()());
             app.use(__WEBPACK_IMPORTED_MODULE_4_koa_bodyparser___default()());
 
@@ -145,15 +153,15 @@ var start = function () {
             // Build in development
 
             if (!config.dev) {
-              _context2.next = 17;
+              _context2.next = 18;
               break;
             }
 
             builder = new __WEBPACK_IMPORTED_MODULE_2_nuxt__["Builder"](nuxt);
-            _context2.next = 17;
+            _context2.next = 18;
             return builder.build();
 
-          case 17:
+          case 18:
 
             app.use(function () {
               var _ref2 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_E_node_nuxt_demo_node_modules_babel_runtime_6_26_0_babel_runtime_regenerator___default.a.mark(function _callee(ctx, next) {
@@ -192,7 +200,7 @@ var start = function () {
             app.listen(port, host);
             console.log('Server listening on ' + host + ':' + port); // eslint-disable-line no-console
 
-          case 20:
+          case 21:
           case 'end':
             return _context2.stop();
         }
@@ -216,7 +224,10 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
 
 
+
+
 start();
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, "server"))
 
 /***/ }),
 /* 3 */
@@ -235,9 +246,11 @@ module.exports = {
   head: {
     title: 'nuxt-temp',
     meta: [{ charset: 'utf-8' }, { hid: 'description', name: 'description', content: 'Nuxt.js project' }],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }, { rel: 'stylesheet', name: 'iview', href: '/styles/iview.css' }, { rel: 'stylesheet', name: 'theme', href: '' }]
   },
-  css: [{ src: '~assets/css/main.css' }, { src: 'iview/dist/styles/iview.css' }],
+  css: [{ src: '~assets/css/main.css'
+    // { src: 'iview/dist/styles/iview.css' }
+  }],
   plugins: [{ src: '~plugins/flexible.js', ssr: false }, { src: '~plugins/iview.js', ssr: true }],
   loading: './components/loading.vue',
   env: {
@@ -341,7 +354,8 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
 var mock = new __WEBPACK_IMPORTED_MODULE_3_axios_mock_adapter___default.a(__WEBPACK_IMPORTED_MODULE_1_axios___default.a);
 mock.onPost(__WEBPACK_IMPORTED_MODULE_2__config__["a" /* default */].base_url + '/api/v1.user/login').reply(function (config) {
-  return [200, { 'ret': 200, 'msg': '请求成功', 'data': { 'code': 0, 'message': '登录成功', 'token': 'PhU0Sd9zwUSwOQgXnJpj7pgSwdA7YD80', 'id': 1, 'mobile': '13770267077', 'name': '大鹏', 'sex': 1, 'status': 1, 'role_id': 1, 'depart_id': 1, 'leader_id': 0 } }];
+  // console.log(JSON.parse(config.data).mobile)
+  return [200, { 'ret': 200, 'msg': '请求成功', 'data': { 'code': 0, 'message': '登录成功', 'token': 'PhU0Sd9zwUSwOQgXnJpj7pgSwdA7YD80', 'id': 1, 'mobile': '13770267077', 'name': JSON.parse(config.data).mobile, 'sex': 1, 'status': 1, 'role_id': 1, 'depart_id': 1, 'leader_id': 0 } }];
 });
 
 var userinfo = function () {
@@ -568,6 +582,18 @@ module.exports = require("axios-mock-adapter");
 /***/ (function(module, exports) {
 
 module.exports = require("@koa/cors");
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports) {
+
+module.exports = require("koa-static");
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports) {
+
+module.exports = require("path");
 
 /***/ })
 /******/ ]);

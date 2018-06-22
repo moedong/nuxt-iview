@@ -41,6 +41,7 @@
     "koa-logger": "^3.2.0",
     "koa-router": "^7.4.0",
     "koa-session2": "^2.2.6",
+    "koa-static": "^5.0.0",
     "nuxt": "latest",
     "rasterizehtml": "^1.2.4",
     "simplemde": "^1.11.2",

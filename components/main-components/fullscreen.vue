@@ -17,7 +17,7 @@ export default {
     },
     computed: {
         showFullScreenBtn () {
-            return window.navigator.userAgent.indexOf('MSIE') < 0;
+            return true;
         }
     },
     methods: {
@@ -49,7 +49,7 @@ export default {
             this.handleFullscreen();
         }
     },
-    created () {
+    mounted () {
         let isFullscreen = document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement || document.fullScreen || document.mozFullScreen || document.webkitIsFullScreen;
         isFullscreen = !!isFullscreen;
         document.addEventListener('fullscreenchange', () => {

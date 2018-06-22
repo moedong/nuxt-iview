@@ -9,12 +9,14 @@ module.exports = {
       { hid: 'description', name: 'description', content: 'Nuxt.js project' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: 'stylesheet', name: 'iview', href: '/styles/iview.css' },
+      { rel: 'stylesheet', name: 'theme', href: '' }
     ]
   },
   css: [
-    { src: '~assets/css/main.css' },
-    { src: 'iview/dist/styles/iview.css' }
+    { src: '~assets/css/main.css' }
+    // { src: 'iview/dist/styles/iview.css' }
   ],
   plugins: [
     { src: '~plugins/flexible.js', ssr: false },

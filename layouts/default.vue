@@ -6,14 +6,12 @@
   <div id="app">
     <div class="main">
       <div class="sidebar-menu-con" :style="{width: shrink?'60px':'200px', overflow: shrink ? 'visible' : 'auto'}">
-        <scroll-bar ref="scrollBar">
           <shrinkable-menu :shrink="shrink" @on-change="handleSubmenuChange" :theme="menuTheme" :before-push="beforePush" :open-names="openedSubmenuArr" :accordion="accordion" :menu-list="menuList">
             <div slot="top" class="logo-con">
               <img v-show="!shrink" src="../assets/images/logo.jpg" key="max-logo" />
               <img v-show="shrink" src="../assets/images/logo-min.jpg" key="min-logo" />
             </div>
           </shrinkable-menu>
-        </scroll-bar>
       </div>
 
       <div class="main-header-con" :style="{paddingLeft: shrink?'60px':'200px'}">
@@ -29,8 +27,10 @@
             </div>
           </div>
           <div class="header-avator-con">
+            <full-screen v-model="isFullScreen" @on-change="fullscreenChange"></full-screen>
             <lock-screen></lock-screen>
             <message-tip v-model="mesCount"></message-tip>
+            <theme-switch></theme-switch>
             <div class="user-dropdown-menu-con">
               <Row type="flex" justify="end" align="middle" class="user-dropdown-innercon">
                 <Dropdown transfer trigger="click" @on-click="handleClickUserDropdown">
@@ -68,9 +68,9 @@ import tagsPageOpened from '../components/main-components/tags-page-opened.vue'
 import breadcrumbNav from '../components/main-components/breadcrumb-nav.vue'
 import lockScreen from '../components/main-components/lockscreen/lockscreen.vue'
 import messageTip from '../components/main-components/message-tip.vue'
-import Cookies from 'js-cookie'
+import themeSwitch from '../components/main-components/theme-switch/theme-switch.vue'
 import util from '@/libs/util.js'
-import scrollBar from '../components/my-components/scroll-bar/vue-scroller-bars'
+import fullScreen from '../components/main-components/fullscreen.vue'
 // 这里特别提示，登陆和退出，以及需要koa2端请求接口的，使用axios2插件
 import axios from '~/plugins/axios2'
 
@@ -82,7 +82,8 @@ export default {
     breadcrumbNav,
     lockScreen,
     messageTip,
-    scrollBar
+    themeSwitch,
+    fullScreen
   },
   head() {
     return {
@@ -93,10 +94,8 @@ export default {
     return {
       shrink: false,
       userName: '',
-      openedSubmenuArr: this.$store.state.app.openedSubmenuArr,
-      activeMenuName: this.$route.name,
-      msgCount: 5,
-      avatarPath: '/images/user-avatar.png'
+      isFullScreen: false,
+      openedSubmenuArr: this.$store.state.app.openedSubmenuArr
     }
   },
   methods: {
@@ -130,21 +129,22 @@ export default {
         this.$Message.success('退出成功')
         this.$store.commit('LOGOUT')
         //window.location.href = 'login'
-        this.$store.dispatch('LOGOUT')
-        .then(() => this.$router.go({ path: 'login' }))
+        this.$store
+          .dispatch('LOGOUT')
+          .then(() => this.$router.go({ path: 'login' }))
       }
     },
     checkTag(name) {
       // console.log('pageTagsList--------', this.pageTagsList)
       let openpageHasTag = this.pageTagsList.some(item => {
-        console.log('openpageHasTag--------', item.name)
+        // console.log('openpageHasTag--------', item.name)
         if (item.name === name) {
           return true
         }
       })
       if (!openpageHasTag) {
         //  解决关闭当前标签后再点击回退按钮会退到当前页时没有标签的问题
-        console.log('openNewPage--------', name)
+        // console.log('openNewPage--------', name)
         util.openNewPage(
           this,
           name,
@@ -163,8 +163,8 @@ export default {
         return true
       }
     },
-    scrollBarResize() {
-      this.$refs.scrollBar.resize()
+    fullscreenChange(isFullScreen) {
+      // console.log(isFullScreen);
     }
   },
   computed: {
@@ -218,8 +218,8 @@ export default {
     //this.$store.commit('setOpenedList')
     this.checkTag(this.$route.name)
     //刷新页面时，重新获取头像
+    this.userName = this.$store.state.user.info.name
     this.$store.commit('setAvator', '')
-    window.addEventListener('resize', this.scrollBarResize)
   },
   created() {
     /**服务端渲染左侧导航条及pannel页面内容**/
@@ -229,7 +229,7 @@ export default {
     /**服务端渲染左侧导航条及pannel页面内容**/
   },
   dispatch() {
-    window.removeEventListener('resize', this.scrollBarResize)
+
   }
 }
 </script>

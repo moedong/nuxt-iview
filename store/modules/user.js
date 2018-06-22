@@ -19,6 +19,9 @@ const user = {
     },
     getUserId: state => {
       return state.info.id || null
+    },
+    getInfo: state => {
+      return state.info
     }
   },
   mutations: {

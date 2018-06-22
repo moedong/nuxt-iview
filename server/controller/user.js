@@ -4,9 +4,10 @@ import MockAdapter from 'axios-mock-adapter'
 
 var mock = new MockAdapter(axios)
 mock.onPost(config.base_url + '/api/v1.user/login').reply(function (config) {
+  // console.log(JSON.parse(config.data).mobile)
   return [
     200,
-    {'ret': 200, 'msg': '请求成功', 'data': {'code': 0, 'message': '登录成功', 'token': 'PhU0Sd9zwUSwOQgXnJpj7pgSwdA7YD80', 'id': 1, 'mobile': '13770267077', 'name': '大鹏', 'sex': 1, 'status': 1, 'role_id': 1, 'depart_id': 1, 'leader_id': 0}}
+    {'ret': 200, 'msg': '请求成功', 'data': {'code': 0, 'message': '登录成功', 'token': 'PhU0Sd9zwUSwOQgXnJpj7pgSwdA7YD80', 'id': 1, 'mobile': '13770267077', 'name': JSON.parse(config.data).mobile, 'sex': 1, 'status': 1, 'role_id': 1, 'depart_id': 1, 'leader_id': 0}}
   ]
 })
 
