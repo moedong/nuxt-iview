@@ -30,7 +30,9 @@ async function start() {
 
   // Import and Set Nuxt.js options
   let config = require('../nuxt.config.js')
-  config.dev = !(app.env === 'production')
+  // 由于涉及到三个环境变化，使用在test，production 时候，为false
+  config.dev = !(app.env === 'production' || app.env === 'test')
+  // console.log('env === ', app.env, env, process.env.COOKIE_DOMAIN, process.env.APP_ENV, config.dev)
 
   // Instantiate nuxt.js
   const nuxt = new Nuxt(config)

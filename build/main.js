@@ -134,8 +134,10 @@ var start = function () {
 
             // Import and Set Nuxt.js options
             config = __webpack_require__(4);
+            // 由于涉及到三个环境变化，使用在test，production 时候，为false
 
-            config.dev = !(app.env === 'production');
+            config.dev = !(app.env === 'production' || app.env === 'test');
+            // console.log('env === ', app.env, env, process.env.COOKIE_DOMAIN, process.env.APP_ENV, config.dev)
 
             // Instantiate nuxt.js
             nuxt = new __WEBPACK_IMPORTED_MODULE_2_nuxt__["Nuxt"](config);
@@ -224,7 +226,7 @@ module.exports = require("regenerator-runtime");
 
 /***/ }),
 /* 4 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
 module.exports = {
   /*
@@ -238,6 +240,9 @@ module.exports = {
   css: [{ src: '~assets/css/main.css' }, { src: 'iview/dist/styles/iview.css' }],
   plugins: [{ src: '~plugins/flexible.js', ssr: false }, { src: '~plugins/iview.js', ssr: true }],
   loading: './components/loading.vue',
+  env: {
+    NODE_ENV: "production"
+  },
   cache: {
     max: 1000,
     maxAge: 900000

@@ -6,11 +6,15 @@
   "private": true,
   "scripts": {
     "dev": "backpack dev",
-    "build": "nuxt build",
-    "start": "nuxt start",
+    "build:prod": "cross-env NODE_ENV=production nuxt build && cross-env NODE_ENV=production backpack build",
+    "build:test": "cross-env NODE_ENV=test nuxt build && cross-env NODE_ENV=test backpack build",
+    "start:prod": "pm2 start ecosystem.config.js --env production",
+    "start:test": "pm2 start ecosystem.config.js --env test",
+    "publish:prod": "npm run build:prod && npm run start:prod",
+    "publish:test": "npm run build:test && npm run start:test",
     "generate": "nuxt generate",
-    "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "precommit": "npm run lint",
+    "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "dev-debug": "node node_modules/.bin/backpack dev --inspect-brk",
     "test": "nuxt build && ava --verbose --serial"
   },

@@ -1,14 +1,21 @@
 /**
- * 用于请求本koa2服务
+ * 用于浏览器端ajax请求
  */
+
 import Axios from 'axios'
 import { Message } from 'iview'
 
-let baseUrl = `http://${process.env.HOST || '127.0.0.1'}:${process.env.PORT ||
-  3000}`
+// 环境变量
+const env = process.env.NODE_ENV || 'development'
+
+let baseUrl = {
+  development: 'http://127.0.0.1:3000',
+  test: 'https://crmfront.tiaoweilian.com',
+  production: 'https://crm.youjiangliao.com'
+}
 
 let options = {
-  baseURL: baseUrl,
+  baseURL: baseUrl[env],
   timeout: 5000,
   responseType: 'json',
   headers: {

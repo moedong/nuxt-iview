@@ -1,11 +1,23 @@
+/**
+ * 用于koa服务器内部请求
+ */
+
 import Axios from 'axios'
-import config from '~/config/app'
 import md5 from '~/libs/md5'
 import { Message } from 'iview'
 
+// 环境变量
+const env = process.env.NODE_ENV || 'development'
+
+let baseUrl = {
+  development: 'https://dev.domain.com',
+  test: 'https://test.domain.com',
+  production: 'https://pro.domain.com'
+}
+
 // axios 配置
 let options = {
-  baseURL: config.base_url,
+  baseURL: baseUrl[env],
   timeout: 5000,
   responseType: 'json',
   headers: {

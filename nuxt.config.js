@@ -21,6 +21,9 @@ module.exports = {
     { src: '~plugins/iview.js', ssr: true }
   ],
   loading: './components/loading.vue',
+  env: {
+    NODE_ENV: process.env.NODE_ENV
+  },
   cache: {
     max: 1000,
     maxAge: 900000
