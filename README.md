@@ -48,7 +48,7 @@ npm run publish:test
 ### 生产环境
 ```bash
 // 需要pm2，如果没有安装的先安装  npm install -g pm2
-npm run publish:test
+npm run publish:prod
 ```
 
 参考资料
